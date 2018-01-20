@@ -1,0 +1,6 @@
+framework module AAE {
+  umbrella header "AAE-umbrella.h"
+
+  export *
+  module * { export * }
+}

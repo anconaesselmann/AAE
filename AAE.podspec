@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'AAE'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of AAE.'
+  s.summary          = 'A collection of utility classes and extensions'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+These are extensions and classes that I use across projects.
                        DESC
 
   s.homepage         = 'https://github.com/anconaesselmann/AAE'
@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'AAE/Classes/**/*'
-  
+
   # s.resource_bundles = {
   #   'AAE' => ['AAE/Assets/*.png']
   # }
