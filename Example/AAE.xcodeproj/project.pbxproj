@@ -8,19 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		979E7F0F201344CD000A7B93 /* Array+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F0E201344CD000A7B93 /* Array+Utility.swift */; };
+		979E7F1220134517000A7B93 /* Array+CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1120134517000A7B93 /* Array+CoreLocation.swift */; };
+		979E7F1420134548000A7B93 /* LocationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1320134548000A7B93 /* LocationConstants.swift */; };
 		DC8FFAA70CDFE892469752B3 /* Pods_AAE_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F2996388F60448AEB7E5D /* Pods_AAE_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1A8F2996388F60448AEB7E5D /* Pods_AAE_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AAE_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2659AC00A6039415659AAD56 /* Pods-AAE_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AAE_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AAE_Tests/Pods-AAE_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		521A3947B5598965F1E26D1B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		521A3947B5598965F1E26D1B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* AAE_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AAE_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		9A5C912CD7333C0D94745943 /* AAE.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = AAE.podspec; path = ../AAE.podspec; sourceTree = "<group>"; };
+		979E7F0E201344CD000A7B93 /* Array+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+Utility.swift"; path = "../AAE/Classes/Array+Utility.swift"; sourceTree = "<group>"; };
+		979E7F1120134517000A7B93 /* Array+CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+CoreLocation.swift"; path = "../AAE/Classes/Array+CoreLocation.swift"; sourceTree = "<group>"; };
+		979E7F1320134548000A7B93 /* LocationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationConstants.swift; path = ../AAE/Classes/LocationConstants.swift; sourceTree = "<group>"; };
+		9A5C912CD7333C0D94745943 /* AAE.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AAE.podspec; path = ../AAE.podspec; sourceTree = "<group>"; };
 		9F09849EFF687998DB347922 /* Pods-AAE_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AAE_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AAE_Tests/Pods-AAE_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		EBF2D5EB84B718FD793E9F82 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		EBF2D5EB84B718FD793E9F82 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +44,8 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				979E7F0E201344CD000A7B93 /* Array+Utility.swift */,
+				979E7F1020134500000A7B93 /* CoreLocation */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
@@ -90,6 +98,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		979E7F1020134500000A7B93 /* CoreLocation */ = {
+			isa = PBXGroup;
+			children = (
+				979E7F1120134517000A7B93 /* Array+CoreLocation.swift */,
+				979E7F1320134548000A7B93 /* LocationConstants.swift */,
+			);
+			name = CoreLocation;
+			sourceTree = "<group>";
+		};
 		C8DA71213B9D5BE3351A65BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,10 +148,6 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
-					607FACCF1AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0900;
@@ -229,7 +242,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				979E7F1420134548000A7B93 /* LocationConstants.swift in Sources */,
+				979E7F0F201344CD000A7B93 /* Array+Utility.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				979E7F1220134517000A7B93 /* Array+CoreLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

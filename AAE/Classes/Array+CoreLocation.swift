@@ -1,0 +1,53 @@
+//  Created by Axel Ancona Esselmann on 1/20/18.
+//  Copyright © 2018 CocoaPods. All rights reserved.
+//
+
+import CoreLocation
+
+public extension Array where Element: CLLocation {
+    
+    var distanceDeltas: [CLLocationDistance] {
+        return deltas { $0.distance(from: $1) }
+    }
+    
+    var timeDeltas: [TimeInterval] {
+        return deltas { $1.timestamp.timeIntervalSince($0.timestamp) }
+    }
+    
+    var elevationDeltas: [CLLocationDistance] {
+        return deltas { $0.altitude - $1.altitude }
+    }
+    
+    var secsPerMeterDeltas: [Double] {
+        return zip(timeDeltas, distanceDeltas).map { $0.0 / $0.1 }
+    }
+    
+    var minutesPerMileDeltas: [Double] {
+        return secsPerMeterDeltas.map { $0 * LocationConstants.minutesPerMile }
+    }
+    
+    var totalDistance: CLLocationDistance {
+        return distanceDeltas.reduce(0.0, +)
+    }
+    
+    var totalTime: TimeInterval {
+        return timeDeltas.reduce(0, +)
+    }
+    
+    var totalElevationGained: CLLocationDistance {
+        return elevationDeltas.filter { $0 > 0 }.reduce(0, +)
+    }
+    
+    var totalElevationLost: CLLocationDistance {
+        return elevationDeltas.filter { $0 < 0 }.reduce(0, +)
+    }
+    
+    var totalElevationChange: CLLocationDistance {
+        guard let last = last, let first = first else { return 0 }
+        return last.altitude - first.altitude
+    }
+    
+    var minutesPerMile: Double {
+        return minutesPerMileDeltas.reduce(0, +) / Double(minutesPerMileDeltas.count)
+    }
+}
