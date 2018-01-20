@@ -1,0 +1,6 @@
+use_frameworks!
+target 'AAE_Tests' do
+  pod 'AAE', :path => '../'
+  
+  
+end
