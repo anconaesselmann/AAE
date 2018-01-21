@@ -11,6 +11,11 @@
 		979E7F0F201344CD000A7B93 /* Array+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F0E201344CD000A7B93 /* Array+Utility.swift */; };
 		979E7F1220134517000A7B93 /* Array+CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1120134517000A7B93 /* Array+CoreLocation.swift */; };
 		979E7F1420134548000A7B93 /* LocationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1320134548000A7B93 /* LocationConstants.swift */; };
+		979E7F1620144A5B000A7B93 /* DistanceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1520144A5B000A7B93 /* DistanceConstants.swift */; };
+		979E7F1A20144ACA000A7B93 /* UtilityProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1920144ACA000A7B93 /* UtilityProtocols.swift */; };
+		979E7F1C20144B04000A7B93 /* TimeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1B20144B04000A7B93 /* TimeConstants.swift */; };
+		979E7F1F20144B44000A7B93 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1E20144B44000A7B93 /* Double+Extensions.swift */; };
+		979E7F2320144B78000A7B93 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F2220144B78000A7B93 /* Int+Extensions.swift */; };
 		DC8FFAA70CDFE892469752B3 /* Pods_AAE_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F2996388F60448AEB7E5D /* Pods_AAE_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +29,11 @@
 		979E7F0E201344CD000A7B93 /* Array+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+Utility.swift"; path = "../AAE/Classes/Array+Utility.swift"; sourceTree = "<group>"; };
 		979E7F1120134517000A7B93 /* Array+CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Array+CoreLocation.swift"; path = "../AAE/Classes/Array+CoreLocation.swift"; sourceTree = "<group>"; };
 		979E7F1320134548000A7B93 /* LocationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationConstants.swift; path = ../AAE/Classes/LocationConstants.swift; sourceTree = "<group>"; };
+		979E7F1520144A5B000A7B93 /* DistanceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DistanceConstants.swift; path = ../AAE/Classes/DistanceConstants.swift; sourceTree = "<group>"; };
+		979E7F1920144ACA000A7B93 /* UtilityProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UtilityProtocols.swift; path = ../AAE/Classes/UtilityProtocols.swift; sourceTree = "<group>"; };
+		979E7F1B20144B04000A7B93 /* TimeConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeConstants.swift; path = ../AAE/Classes/TimeConstants.swift; sourceTree = "<group>"; };
+		979E7F1E20144B44000A7B93 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Double+Extensions.swift"; path = "../AAE/Classes/Double+Extensions.swift"; sourceTree = "<group>"; };
+		979E7F2220144B78000A7B93 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Int+Extensions.swift"; path = "../AAE/Classes/Int+Extensions.swift"; sourceTree = "<group>"; };
 		9A5C912CD7333C0D94745943 /* AAE.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AAE.podspec; path = ../AAE.podspec; sourceTree = "<group>"; };
 		9F09849EFF687998DB347922 /* Pods-AAE_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AAE_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AAE_Tests/Pods-AAE_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		EBF2D5EB84B718FD793E9F82 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -45,6 +55,9 @@
 			isa = PBXGroup;
 			children = (
 				979E7F0E201344CD000A7B93 /* Array+Utility.swift */,
+				979E7F1E20144B44000A7B93 /* Double+Extensions.swift */,
+				979E7F2220144B78000A7B93 /* Int+Extensions.swift */,
+				979E7F1D20144B15000A7B93 /* Constants */,
 				979E7F1020134500000A7B93 /* CoreLocation */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -102,9 +115,19 @@
 			isa = PBXGroup;
 			children = (
 				979E7F1120134517000A7B93 /* Array+CoreLocation.swift */,
-				979E7F1320134548000A7B93 /* LocationConstants.swift */,
+				979E7F1920144ACA000A7B93 /* UtilityProtocols.swift */,
 			);
 			name = CoreLocation;
+			sourceTree = "<group>";
+		};
+		979E7F1D20144B15000A7B93 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				979E7F1320134548000A7B93 /* LocationConstants.swift */,
+				979E7F1B20144B04000A7B93 /* TimeConstants.swift */,
+				979E7F1520144A5B000A7B93 /* DistanceConstants.swift */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 		C8DA71213B9D5BE3351A65BB /* Frameworks */ = {
@@ -242,10 +265,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				979E7F1F20144B44000A7B93 /* Double+Extensions.swift in Sources */,
+				979E7F1620144A5B000A7B93 /* DistanceConstants.swift in Sources */,
 				979E7F1420134548000A7B93 /* LocationConstants.swift in Sources */,
+				979E7F2320144B78000A7B93 /* Int+Extensions.swift in Sources */,
+				979E7F1A20144ACA000A7B93 /* UtilityProtocols.swift in Sources */,
 				979E7F0F201344CD000A7B93 /* Array+Utility.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				979E7F1220134517000A7B93 /* Array+CoreLocation.swift in Sources */,
+				979E7F1C20144B04000A7B93 /* TimeConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

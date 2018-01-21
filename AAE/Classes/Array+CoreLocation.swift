@@ -50,4 +50,27 @@ public extension Array where Element: CLLocation {
     var minutesPerMile: Double {
         return minutesPerMileDeltas.reduce(0, +) / Double(minutesPerMileDeltas.count)
     }
+    
+    var minuteSplits: [[CLLocation]] {
+        let splitSize = Double(TimeConstants.secondsPerMinute)
+        return splits(splitSize, transform: { $1.timestamp.timeIntervalSince($0.timestamp) })
+    }
+    
+    var mileSplits: [[CLLocation]] {
+        let splitSize = DistanceConstants.metersPerMile
+        return splits(splitSize, transform: { $0.distance(from: $1) })
+    }
+    
+    var kilometerSplits: [[CLLocation]] {
+        return metricDistanceSplits(metersPerDistanceUnit: DistanceConstants.metersPerKilometer)
+    }
+    
+    var hundredMeterSplits: [[CLLocation]] {
+        return metricDistanceSplits(metersPerDistanceUnit: DistanceConstants.hundredMetersPerKilometer)
+    }
+    
+    func metricDistanceSplits(metersPerDistanceUnit: Double = 1.0) -> [[CLLocation]] {
+        return splits(metersPerDistanceUnit, transform: { $0.distance(from: $1) })
+    }
+    
 }
