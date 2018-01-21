@@ -5,5 +5,5 @@
 import Foundation
 
 public struct TimeConstants {
-    static let secondsPerMinute = 60
+    public static let secondsPerMinute = 60
 }

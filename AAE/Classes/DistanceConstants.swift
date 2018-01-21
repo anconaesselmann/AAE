@@ -5,8 +5,8 @@
 import Foundation
 
 public struct DistanceConstants {
-    static let kilometersPerMile = 1.60934
-    static let metersPerMile = kilometersPerMile * 1000.0
-    static let metersPerKilometer = 1000.0
-    static let hundredMetersPerKilometer = 100.0
+    public static let kilometersPerMile = 1.60934
+    public static let metersPerMile = kilometersPerMile * 1000.0
+    public static let metersPerKilometer = 1000.0
+    public static let hundredMetersPerKilometer = 100.0
 }

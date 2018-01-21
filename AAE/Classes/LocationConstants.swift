@@ -5,5 +5,5 @@
 import Foundation
 
 public struct LocationConstants {
-    static let minutesPerMile: Double = 26.8224
+    public static let minutesPerMile: Double = 26.8224
 }
