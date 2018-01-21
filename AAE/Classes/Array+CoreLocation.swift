@@ -30,6 +30,14 @@ public extension Array where Element: CLLocation {
         return distanceDeltas.reduce(0.0, +)
     }
     
+    var totalDistanceMiles: CLLocationDistance {
+        return totalDistance / DistanceConstants.metersPerMile
+    }
+    
+    var totalDistanceKilometers: CLLocationDistance {
+        return totalDistance / DistanceConstants.metersPerKilometer
+    }
+    
     var totalTime: TimeInterval {
         return timeDeltas.reduce(0, +)
     }
