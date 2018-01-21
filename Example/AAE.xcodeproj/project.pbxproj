@@ -17,8 +17,8 @@
 		979E7F1F20144B44000A7B93 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F1E20144B44000A7B93 /* Double+Extensions.swift */; };
 		979E7F2320144B78000A7B93 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F2220144B78000A7B93 /* Int+Extensions.swift */; };
 		979E7F2A201487A3000A7B93 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F29201487A3000A7B93 /* CGFloat+Extensions.swift */; };
-		979E7F2C20148825000A7B93 /* LocationOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F2B20148825000A7B93 /* LocationOperators.swift */; };
 		979E7F2E201488B5000A7B93 /* Set+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F2D201488B5000A7B93 /* Set+Extensions.swift */; };
+		979E7F3020148BFA000A7B93 /* LocationOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979E7F2F20148BFA000A7B93 /* LocationOperators.swift */; };
 		DC8FFAA70CDFE892469752B3 /* Pods_AAE_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A8F2996388F60448AEB7E5D /* Pods_AAE_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,8 +38,8 @@
 		979E7F1E20144B44000A7B93 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Double+Extensions.swift"; path = "../AAE/Classes/Double+Extensions.swift"; sourceTree = "<group>"; };
 		979E7F2220144B78000A7B93 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Int+Extensions.swift"; path = "../AAE/Classes/Int+Extensions.swift"; sourceTree = "<group>"; };
 		979E7F29201487A3000A7B93 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGFloat+Extensions.swift"; path = "../AAE/Classes/CGFloat+Extensions.swift"; sourceTree = "<group>"; };
-		979E7F2B20148825000A7B93 /* LocationOperators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOperators.swift; sourceTree = "<group>"; };
 		979E7F2D201488B5000A7B93 /* Set+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Set+Extensions.swift"; path = "../AAE/Classes/Set+Extensions.swift"; sourceTree = "<group>"; };
+		979E7F2F20148BFA000A7B93 /* LocationOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationOperators.swift; path = ../AAE/Classes/LocationOperators.swift; sourceTree = "<group>"; };
 		9A5C912CD7333C0D94745943 /* AAE.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AAE.podspec; path = ../AAE.podspec; sourceTree = "<group>"; };
 		9F09849EFF687998DB347922 /* Pods-AAE_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AAE_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AAE_Tests/Pods-AAE_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		EBF2D5EB84B718FD793E9F82 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -123,8 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				979E7F1120134517000A7B93 /* Array+CoreLocation.swift */,
-				979E7F2B20148825000A7B93 /* LocationOperators.swift */,
 				979E7F1920144ACA000A7B93 /* UtilityProtocols.swift */,
+				979E7F2F20148BFA000A7B93 /* LocationOperators.swift */,
 			);
 			name = CoreLocation;
 			sourceTree = "<group>";
@@ -276,13 +276,13 @@
 			files = (
 				979E7F1F20144B44000A7B93 /* Double+Extensions.swift in Sources */,
 				979E7F1620144A5B000A7B93 /* DistanceConstants.swift in Sources */,
+				979E7F3020148BFA000A7B93 /* LocationOperators.swift in Sources */,
 				979E7F1420134548000A7B93 /* LocationConstants.swift in Sources */,
 				979E7F2320144B78000A7B93 /* Int+Extensions.swift in Sources */,
 				979E7F1A20144ACA000A7B93 /* UtilityProtocols.swift in Sources */,
 				979E7F0F201344CD000A7B93 /* Array+Utility.swift in Sources */,
 				979E7F2E201488B5000A7B93 /* Set+Extensions.swift in Sources */,
 				979E7F2A201487A3000A7B93 /* CGFloat+Extensions.swift in Sources */,
-				979E7F2C20148825000A7B93 /* LocationOperators.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				979E7F1220134517000A7B93 /* Array+CoreLocation.swift in Sources */,
 				979E7F1C20144B04000A7B93 /* TimeConstants.swift in Sources */,
