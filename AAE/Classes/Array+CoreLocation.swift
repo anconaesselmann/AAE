@@ -61,6 +61,16 @@ public extension Array where Element: CLLocation {
         return splits(splitSize, transform: { $0.distance(from: $1) })
     }
     
+    var halfMileSplits: [[CLLocation]] {
+        let splitSize = DistanceConstants.metersPerMile / 2.0
+        return splits(splitSize, transform: { $0.distance(from: $1) })
+    }
+    
+    var quarterMileSplits: [[CLLocation]] {
+        let splitSize = DistanceConstants.metersPerMile / 4.0
+        return splits(splitSize, transform: { $0.distance(from: $1) })
+    }
+    
     var kilometerSplits: [[CLLocation]] {
         return metricDistanceSplits(metersPerDistanceUnit: DistanceConstants.metersPerKilometer)
     }
