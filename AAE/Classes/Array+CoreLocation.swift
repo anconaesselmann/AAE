@@ -44,7 +44,7 @@ public extension Array where Element: CLLocation {
     
     var totalElevationChange: CLLocationDistance {
         guard let last = last, let first = first else { return 0 }
-        return last.altitude - first.altitude
+        return first.altitude - last.altitude
     }
     
     var minutesPerMile: Double {
