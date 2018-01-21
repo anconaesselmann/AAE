@@ -17,10 +17,8 @@ public extension Array {
         }
         return result
     }
-}
 
-// TODO: What does it mean when values are larger than bins?
-public extension Array {
+    // TODO: What does it mean when values are larger than bins?
     func splits<T: ExpressibleAsDouble>(_ splitSize: ExpressibleAsDouble, transform: ((Element, Element) -> T)) -> [[Element]] {
         let splitSize = splitSize.asDouble
         var result: [[Element]] = []
@@ -44,5 +42,42 @@ public extension Array {
             result.append(currentBin)
         }
         return result
+    }
+}
+
+public extension Array where Element: Hashable {
+    
+    func after(item: Element) -> Element? {
+        if let index = index(of: item), index + 1 < self.count {
+            return self[index + 1]
+        }
+        return nil
+    }
+    
+    func before(item: Element) -> Element? {
+        if let index = index(of: item), index - 1 >= 0 {
+            return self[index - 1]
+        }
+        return nil
+    }
+    
+    @discardableResult
+    mutating func appendIfNew(item: Element) -> Bool {
+        if let _ = index(of: item) {
+            return false
+        } else {
+            self.append(item)
+            return true
+        }
+    }
+    
+    @discardableResult
+    mutating func removeIfMember(item: Element) -> Bool {
+        if let index = index(of: item) {
+            self.remove(at: index)
+            return true
+        } else {
+            return false
+        }
     }
 }
