@@ -83,4 +83,16 @@ public extension Array where Element: CLLocation {
         return splits(metersPerDistanceUnit, transform: { $0.distance(from: $1) })
     }
     
+    var runningTotalsDistanceMeters: [CLLocationDistance] {
+        return distanceDeltas.runningTotals()
+    }
+    
+    var runningTotalsDistanceKilometers: [CLLocationDistance] {
+        return distanceDeltas.runningTotals().map{ $0 / DistanceConstants.metersPerKilometer}
+    }
+    
+    var runningTotalsDistanceMiles: [CLLocationDistance] {
+        return distanceDeltas.runningTotals().map{ $0 / DistanceConstants.metersPerMile}
+    }
+    
 }

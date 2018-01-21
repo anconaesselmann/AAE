@@ -45,6 +45,19 @@ public extension Array {
     }
 }
 
+public extension Array where Element: ExpressibleAsDouble {
+    func runningTotals() -> [Double] {
+        var result: [Double] = [0]
+        var runningTotal: Double = 0.0
+        guard !self.isEmpty else { return result }
+        for delta in self {
+            runningTotal += delta.asDouble
+            result.append(runningTotal)
+        }
+        return result
+    }
+}
+
 public extension Array where Element: Hashable {
     
     func after(item: Element) -> Element? {
