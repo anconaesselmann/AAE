@@ -1,4 +1,4 @@
-//  Created by Axel Ancona Esselmann on 9/11/19.
+//  Created by Axel Ancona Esselmann on 9/11/18.
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
@@ -33,5 +33,41 @@ extension URN: Decodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(stringValue)
+    }
+}
+
+extension URN: Equatable {
+    public static func ==(lhs: URN, rhs: URN) -> Bool {
+        return lhs.stringValue.lowercased() == rhs.stringValue.lowercased()
+    }
+}
+
+extension UUID {
+    init?(urnString: String?) {
+        guard
+            let urnString = urnString,
+            let uuidString = urnString.matches(for: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}").first
+            else { return nil }
+
+        self.init(uuidString: uuidString)
+    }
+}
+
+extension String {
+    func matches(for regex: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let nsString = self as NSString
+            let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
+            return results.map { nsString.substring(with: $0.range)}
+        } catch {
+            return []
+        }
+    }
+}
+
+extension UUID {
+    var serverString: String {
+        return uuidString.lowercased()
     }
 }

@@ -2,9 +2,39 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-import UIKit
-
 #if os(iOS)
+
+import UIKit
+import RxSwift
+import RxOptional
+
+public extension UITextField {
+    func setLeftPadding(_ amount:CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+
+    func setRightPadding(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
+    }
+
+    func setPadding(_ amount:CGFloat) {
+        setLeftPadding(amount)
+        setRightPadding(amount)
+    }
+}
+
+public extension UITextField {
+    var editingDidEnd: Observable<String?> {
+        return rx
+            .controlEvent([.editingDidEnd])
+            .withLatestFrom(rx.text)
+            .asObservable()
+    }
+}
 
 public extension UITextField {
     convenience init(placeholder: String) {

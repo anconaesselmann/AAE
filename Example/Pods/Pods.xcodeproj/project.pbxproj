@@ -34,16 +34,16 @@
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7DD1CFE2EC05815201B7D37299F82C4C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		832166B4E0B5C1537FED2B9843EB53F8 /* Pods-AAE_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AAE_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9CC092FDD92A22AF6DD9711CA0619F32 /* Pods-AAE_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AAE_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		A204621F43112444672A02DFF1B6A4EB /* Pods-AAE_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AAE_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		A5960DB1A2342819E3457BE88BFFB164 /* Pods_AAE_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_AAE_Tests.framework; path = "Pods-AAE_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7E3614CA4D726DA71C8E2D580453664 /* AAE.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = AAE.modulemap; sourceTree = "<group>"; };
+		A5960DB1A2342819E3457BE88BFFB164 /* Pods_AAE_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AAE_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7E3614CA4D726DA71C8E2D580453664 /* AAE.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = AAE.modulemap; sourceTree = "<group>"; };
 		BF23B7912E42E16CABA7D0F7CFD04AB0 /* Pods-AAE_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AAE_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		BFF4F717AD1C92C41D2E1F44372FBEB9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D266C3828F8F728AF58DC36D227E1DC0 /* Pods-AAE_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-AAE_Tests.modulemap"; sourceTree = "<group>"; };
+		D266C3828F8F728AF58DC36D227E1DC0 /* Pods-AAE_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AAE_Tests.modulemap"; sourceTree = "<group>"; };
 		D3CA6DD84847BF4115F00C928987922C /* AAE-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AAE-prefix.pch"; sourceTree = "<group>"; };
-		E7FE950C745E482E8FCB0D61463EBB16 /* AAE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AAE.framework; path = AAE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7FE950C745E482E8FCB0D61463EBB16 /* AAE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AAE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93CF8644FF1713F35A3EE7EAFB74724 /* Pods-AAE_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AAE_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F62B8CBACB434624166C96F25BD17ECC /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = AAE/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
 		F68FCB7A1149791124001DD50B735826 /* Pods-AAE_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AAE_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -235,6 +235,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
@@ -362,7 +363,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -517,7 +518,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

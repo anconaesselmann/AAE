@@ -4,6 +4,7 @@
 
 import Foundation
 
+// https://stackoverflow.com/questions/46603220/how-do-i-convert-url-query-to-a-dictionary-in-swift#answer-46603619
 public extension URL {
     var queryDictionary: [String: String]? {
         guard let query = self.query else { return nil}

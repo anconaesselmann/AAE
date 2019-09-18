@@ -61,14 +61,14 @@ public extension Array where Element: ExpressibleAsDouble {
 public extension Array where Element: Hashable {
     
     func after(item: Element) -> Element? {
-        if let index = index(of: item), index + 1 < self.count {
+        if let index = firstIndex(of: item), index + 1 < self.count {
             return self[index + 1]
         }
         return nil
     }
     
     func before(item: Element) -> Element? {
-        if let index = index(of: item), index - 1 >= 0 {
+        if let index = firstIndex(of: item), index - 1 >= 0 {
             return self[index - 1]
         }
         return nil
@@ -76,7 +76,7 @@ public extension Array where Element: Hashable {
     
     @discardableResult
     mutating func appendIfNew(item: Element) -> Bool {
-        if let _ = index(of: item) {
+        if let _ = firstIndex(of: item) {
             return false
         } else {
             self.append(item)
@@ -86,7 +86,7 @@ public extension Array where Element: Hashable {
     
     @discardableResult
     mutating func removeIfMember(item: Element) -> Bool {
-        if let index = index(of: item) {
+        if let index = firstIndex(of: item) {
             self.remove(at: index)
             return true
         } else {
