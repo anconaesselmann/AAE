@@ -2,10 +2,12 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-import Foundation
-
 import RxSwift
 import RxOptional
+
+public typealias ObservableState<T> = Observable<ViewModelState<T>>
+public typealias BehaviourState<T> = BehaviorSubject<ViewModelState<T>>
+public typealias PublishState<T> = PublishSubject<ViewModelState<T>>
 
 public protocol LoadableType {
     associatedtype LoadedType

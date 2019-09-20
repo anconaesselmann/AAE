@@ -41,7 +41,7 @@ extension RequestStatus: ViewModelStateConvertable {
 }
 
 public extension ObservableType where Element: ViewModelStateConvertable  {
-    var viewModelState: Observable<ViewModelState<Element.ViewModelStateData>> {
+    var viewModelState: ObservableState<Element.ViewModelStateData> {
         return self.map { (element: Element) -> ViewModelState<Element.ViewModelStateData> in
             let state: ViewModelState<Element.ViewModelStateData> = element.viewModelState
             return state

@@ -58,7 +58,12 @@ open class BaseViewController: UIViewController, Injectable {
         }
     }
 
-    public func subscribe<T>(state: Observable<ViewModelState<T>>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+    }
+
+    public func subscribe<T>(state: ObservableState<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
         state.observeOnMain().subscribeOnNext { [weak self] state in
             switch state {
             case .loading: self?.showLoader(customLoadingComponent)
@@ -75,7 +80,7 @@ open class BaseViewController: UIViewController, Injectable {
             }.disposed(by: bag)
     }
 
-    public func subscribe<T>(state: Observable<ViewModelState<T>>) -> Observable<T> {
+    public func subscribe<T>(state: ObservableState<T>) -> Observable<T> {
         return state.observeOnMain().map { [weak self] state -> T? in
             switch state {
             case .loading:

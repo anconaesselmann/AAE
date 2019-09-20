@@ -80,11 +80,11 @@ public extension UIImageView {
         }
     }
 
-    func loadWithStatusReport(url: URL?, with service: ImageServing) -> Observable<ViewModelState<Void>> {
+    func loadWithStatusReport(url: URL?, with service: ImageServing) -> ObservableState<Void> {
         guard let url = url else {
-            return Observable<ViewModelState<Void>>.just(.error(ImageError.error))
+            return ObservableState<Void>.just(.error(ImageError.error))
         }
-        return Observable<ViewModelState<Void>>.create( { [weak self] observer -> Disposable in
+        return ObservableState<Void>.create( { [weak self] observer -> Disposable in
             let disposable = Disposables.create()
             observer.onNext(.loading)
             let _ = service.image(for: url).subscribe(onSuccess: { [weak self] image in
