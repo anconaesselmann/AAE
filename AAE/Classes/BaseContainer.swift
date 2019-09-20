@@ -2,8 +2,6 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-import AAE
-
 public typealias Dependency = Injectable & Injecting
 
 public protocol Injecting {
