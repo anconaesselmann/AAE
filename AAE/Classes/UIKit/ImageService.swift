@@ -2,8 +2,6 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-#if os(iOS)
-
 import UIKit
 import RxSwift
 import SDWebImage
@@ -17,6 +15,8 @@ public protocol ImageServing {
 public enum ImageError: Error {
     case error
     case couldNotLoadUrl(URL)
+    case noUrl
+    case noImageService
 }
 
 public class ImageService: ImageServing {
@@ -67,6 +67,7 @@ public class ImageService: ImageServing {
     }
 }
 
+#if os(iOS)
 public extension UIImageView {
 
     func load(from url: URL?, with service: ImageServing) {
@@ -80,9 +81,12 @@ public extension UIImageView {
         }
     }
 
-    func loadWithStatusReport(url: URL?, with service: ImageServing) -> ObservableState<Void> {
+    func loadWithStatusReport(url: URL?, with service: ImageServing?) -> ObservableState<Void> {
+        guard let service = service else {
+            return ObservableState<Void>.just(.error(ImageError.noImageService))
+        }
         guard let url = url else {
-            return ObservableState<Void>.just(.error(ImageError.error))
+            return ObservableState<Void>.just(.error(ImageError.noUrl))
         }
         return ObservableState<Void>.create( { [weak self] observer -> Disposable in
             let disposable = Disposables.create()
@@ -100,3 +104,19 @@ public extension UIImageView {
 }
 
 #endif
+
+public protocol ImageServiceConsumer: class {
+    var imageService: ImageServing? { get set }
+}
+
+public class ImageServiceDependency: BaseDependency, Injecting {
+
+    lazy var imageService: ImageServing = { return ImageService() }()
+
+    public func inject(into consumer: AnyObject) {
+        guard let consumer = consumer as? ImageServiceConsumer else {
+            return
+        }
+        consumer.imageService = imageService
+    }
+}

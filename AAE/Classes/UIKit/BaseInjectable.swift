@@ -2,10 +2,19 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-import Foundation
+import RxSwift
 
-open class BaseManager: Injectable {
+public protocol ContainerProtocol {
+    func inject(_ consumer: AnyObject)
+}
 
+public protocol Injectable {
+    init(container: ContainerProtocol)
+}
+
+open class BaseInjectable: Injectable {
+
+    public let bag = DisposeBag()
     public let container: ContainerProtocol
 
     public required init(container: ContainerProtocol) {

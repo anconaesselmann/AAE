@@ -8,28 +8,16 @@ import RxSwift
 import constrain
 #endif
 
-public protocol ContainerProtocol {
-    func inject(_ consumer: AnyObject)
-}
+#if os(iOS)
+open class BaseViewController: UIViewController, Injectable {
 
-public protocol Injectable {
-    init(container: ContainerProtocol)
-}
-
-open class BaseViewModel: Injectable {
+    public let bag = DisposeBag()
     public let container: ContainerProtocol
 
     public required init(container: ContainerProtocol) {
         self.container = container
-        container.inject(self)
-    }
-}
-
-#if os(iOS)
-open class BaseViewController: UIViewController, Injectable {
-
-    public required init(container: ContainerProtocol) {
         super.init(nibName: nil, bundle: nil)
+        container.inject(self)
     }
 
     @available(*, unavailable)
@@ -37,7 +25,6 @@ open class BaseViewController: UIViewController, Injectable {
 
     public var loadingComponent: UIViewController?
     public let hasDismissedError: Observable<Error> = PublishSubject<Error>()
-    private let bag = DisposeBag()
 
     internal func showLoader(_ customLoadingComponent: UIViewController? = nil) {
         DispatchQueue.main.async { [weak self] in

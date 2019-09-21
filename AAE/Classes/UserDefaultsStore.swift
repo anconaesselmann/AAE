@@ -8,7 +8,7 @@ public protocol Storing: class {
     func get<T>(forKey key: String) -> T? where T: Codable
 }
 
-public class UserDefaultsStore: BaseManager, Storing {
+public class UserDefaultsStore: BaseInjectable, Storing {
 
     public var decodingStategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase
     public var encodingStategy: JSONEncoder.KeyEncodingStrategy = .convertToSnakeCase
