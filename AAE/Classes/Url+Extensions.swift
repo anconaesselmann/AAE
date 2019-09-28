@@ -24,3 +24,16 @@ public extension URL {
         return queryStrings
     }
 }
+
+public extension URL {
+    func appendingQueryItem(name: String, value: String) -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return self
+        }
+        var queryItems = components.queryItems ?? []
+        let queryItem = URLQueryItem(name: name, value: value)
+        queryItems.append(queryItem)
+        components.queryItems = queryItems
+        return components.url ?? self
+    }
+}

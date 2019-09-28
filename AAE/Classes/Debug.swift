@@ -45,6 +45,12 @@ public class Debug {
         #endif
     }
 
+    public static func log(_ error: Error, file: String = #file, line: Int = #line) {
+        #if DEBUG
+        log("\(error)\nFile: \(file)\nLine #\(line)", group: DebugGroup.warning)
+        #endif
+    }
+
     public static func printJson(_ json: Any) {
         #if DEBUG
         guard

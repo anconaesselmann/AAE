@@ -3,6 +3,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 #if os(iOS)
 
@@ -11,6 +13,12 @@ public extension UIButton {
         self.init(frame: CGRect.zero)
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
+    }
+}
+
+extension Reactive where Base : UIButton {
+    public var tapped: Observable<Void> {
+        return tap.map { _ in }
     }
 }
 

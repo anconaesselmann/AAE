@@ -25,6 +25,8 @@ public class JsonCoder {
         case couldNotDecode(Error)
     }
 
+    public static var `default`: JsonCoder = { JsonCoder() }()
+
     public func decode<T>(_ jsonData: Data?, to type: T.Type) -> Single<T> where T: Decodable {
         guard let data = jsonData else {
             return Single.error(JsonError.noData)
@@ -39,6 +41,18 @@ public class JsonCoder {
 
     public func decode<T>(_ jsonData: Data?) -> Single<T> where T: Decodable {
         return decode(jsonData, to: T.self)
+    }
+
+    public func decode<T>(string: String?, to type: T.Type) -> T? where T: Decodable {
+        guard let string = string, let data = string.data(using: .utf8) else {
+            return nil
+        }
+        do {
+            let decoded = try decoder.decode(T.self, from: data)
+            return decoded
+        } catch {
+            return nil
+        }
     }
 
 }

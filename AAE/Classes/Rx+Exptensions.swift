@@ -60,3 +60,9 @@ public extension ObservableType {
     }
 
 }
+
+extension ObservableType {
+    public static var deinitialized: RxSwift.Observable<Self.Element> {
+        return Observable<Self.Element>.error(AAError.deinitialized)
+    }
+}

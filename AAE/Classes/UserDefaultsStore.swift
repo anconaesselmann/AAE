@@ -1,6 +1,7 @@
 //  Created by Axel Ancona Esselmann on 9/13/19.
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
+import Contain
 
 public protocol Storing: class {
     func set<T>(_ storable: T, forKey key: String) where T: Codable
@@ -78,5 +79,21 @@ public class UserDefaultsStore: BaseInjectable, Storing {
         default:
             return nil
         }
+    }
+}
+
+public protocol StoreConsumer: class {
+    var store: Storing? { get set }
+}
+
+public class StoreDependency: BaseDependency, Injecting {
+
+    lazy var store: Storing = { return UserDefaultsStore(container: self.container) }()
+
+    public override func inject(into consumer: AnyObject) {
+        guard let consumer = consumer as? StoreConsumer else {
+            return
+        }
+        consumer.store = store
     }
 }

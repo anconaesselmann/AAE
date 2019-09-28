@@ -5,6 +5,7 @@
 import UIKit
 import RxSwift
 import SDWebImage
+import Contain
 
 public protocol ImageServing {
     func image(for url: URL) -> Single<UIImage>
@@ -113,7 +114,7 @@ public class ImageServiceDependency: BaseDependency, Injecting {
 
     lazy var imageService: ImageServing = { return ImageService() }()
 
-    public func inject(into consumer: AnyObject) {
+    override public func inject(into consumer: AnyObject) {
         guard let consumer = consumer as? ImageServiceConsumer else {
             return
         }
