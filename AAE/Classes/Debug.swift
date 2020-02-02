@@ -21,7 +21,7 @@ public class Debug {
     private static var loggingGroups: [String: Bool] = [:]
     #endif
 
-    static func log(group: DebugPrintable, isLogging: Bool = true) {
+    public static func log(group: DebugPrintable, isLogging: Bool = true) {
         #if DEBUG
         self.loggingGroups[group.rawValue] = isLogging
         #endif

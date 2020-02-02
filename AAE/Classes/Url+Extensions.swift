@@ -36,4 +36,16 @@ public extension URL {
         components.queryItems = queryItems
         return components.url ?? self
     }
+
+    func appendingQueryItem(name: StringRepresentable, value: String) -> URL {
+        return self.appendingQueryItem(name: name.stringValue, value: value)
+    }
+
+    func appendingQueryItem(name: StringRepresentable, value: StringRepresentable) -> URL {
+        return self.appendingQueryItem(name: name.stringValue, value: value.stringValue)
+    }
+
+    func appendingPathComponent(_ pathComponent: StringRepresentable) -> URL {
+        return self.appendingPathComponent(pathComponent.stringValue)
+    }
 }

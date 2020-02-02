@@ -21,6 +21,16 @@ public struct URN {
     }
 }
 
+extension URN: StringRepresentable {
+    public var rawValue: String {
+        return stringValue
+    }
+
+    public init?(rawValue: String) {
+        self.init(stringValue: rawValue)
+    }
+}
+
 extension URN: Encodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -42,7 +52,7 @@ extension URN: Equatable {
     }
 }
 
-extension UUID {
+public extension UUID {
     init?(urnString: String?) {
         guard
             let urnString = urnString,
@@ -53,7 +63,7 @@ extension UUID {
     }
 }
 
-extension String {
+public extension String {
     func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex)
@@ -66,7 +76,7 @@ extension String {
     }
 }
 
-extension UUID {
+public extension UUID {
     var serverString: String {
         return uuidString.lowercased()
     }

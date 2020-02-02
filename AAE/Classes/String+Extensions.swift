@@ -18,3 +18,13 @@ public extension String {
         return first + other
     }
 }
+
+extension String: StringRepresentable {
+    public var rawValue: String {
+        return self
+    }
+
+    public init?(rawValue: String) {
+        self.init(rawValue)
+    }
+}

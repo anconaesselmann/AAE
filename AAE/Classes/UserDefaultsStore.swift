@@ -9,6 +9,20 @@ public protocol Storing: class {
     func get<T>(forKey key: String) -> T? where T: Codable
 }
 
+public extension Storing {
+    func set<T>(_ storable: T, forKey key: StringRepresentable) where T: Codable {
+        set(storable, forKey: key.stringValue)
+    }
+
+    func get<T>(type: T.Type, forKey key: StringRepresentable) -> T? where T: Codable {
+        return get(type: type, forKey: key.stringValue)
+    }
+
+    func get<T>(forKey key: StringRepresentable) -> T? where T: Codable {
+        return get(type: T.self, forKey: key.stringValue)
+    }
+}
+
 public class UserDefaultsStore: BaseInjectable, Storing {
 
     public var decodingStategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase

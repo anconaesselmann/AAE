@@ -9,6 +9,7 @@ import RxSwift
 import RxOptional
 
 public extension UITextField {
+    // https://stackoverflow.com/questions/25367502/create-space-at-the-beginning-of-a-uitextfield#40636808
     func setLeftPadding(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.leftView = paddingView

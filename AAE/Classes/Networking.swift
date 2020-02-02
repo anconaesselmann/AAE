@@ -11,7 +11,7 @@ public enum NetworkingError: Error {
 
 public class Networking {
 
-    public enum HeaderKeys: String {
+    public enum HeaderKeys: String, StringRepresentable {
         case contentType = "Content-Type"
         case urn = "urn"
         case user = "User"
@@ -19,7 +19,7 @@ public class Networking {
         case password = "Password"
     }
 
-    public enum HeaderValues: String {
+    public enum HeaderValues: String, StringRepresentable {
         case json = "application/json"
     }
 
