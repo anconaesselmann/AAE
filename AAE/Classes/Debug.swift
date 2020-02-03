@@ -63,4 +63,16 @@ public class Debug {
         print(NSString(string: string))
         #endif
     }
+
+    public static func print(_ string: String?) {
+        #if DEBUG
+        log(string, group: DebugGroup.debug)
+        #endif
+    }
+
+    public static func print(_ strings: [String]?) {
+        #if DEBUG
+        print(strings?.joined(separator: ", "))
+        #endif
+    }
 }
