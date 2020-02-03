@@ -27,14 +27,6 @@ public extension URL {
     func appendingPathComponent(_ pathComponent: StringRepresentable) -> URL {
         return self.appendingPathComponent(pathComponent.stringValue)
     }
-
-    /// For url comparison where only the host and the port are of interest
-    var hostWithPort: URL? {
-        guard let host = self.host else {
-            return nil
-        }
-        return URL(string: "\(host):\(17851)")
-    }
 }
 
 
