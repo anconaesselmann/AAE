@@ -4,7 +4,7 @@
 
 public struct DeepLink<Root> where Root: StringRepresentable {
     public let root: Root
-    public let queryDict: [String: String]
+    public let queryDict: [String: Any]
 
     public init?(url: URL) {
         guard
@@ -15,6 +15,6 @@ public struct DeepLink<Root> where Root: StringRepresentable {
             return nil
         }
         self.root = root
-        self.queryDict = url.queryDictionary ?? [:]
+        self.queryDict = url.toQueryItems()?.toDictionary() ?? [:]
     }
 }

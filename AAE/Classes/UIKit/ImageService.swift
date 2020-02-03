@@ -78,7 +78,7 @@ public extension UIImageView {
         let _ = service.image(for: url).subscribe(onSuccess: { [weak self] image in
             self?.image = image
         }) { Error in
-            print("Could not load image asset from \(url.absoluteString)")
+            Debug.printDebug("Could not load image asset from \(url.absoluteString)")
         }
     }
 

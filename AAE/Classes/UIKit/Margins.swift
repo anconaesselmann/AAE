@@ -3,9 +3,17 @@
 
 import UIKit
 
-public struct Margins {
-    public static let small: CGFloat = 8
-    public static let medium: CGFloat = 16
-    public static let large: CGFloat = 24
-    public static let extraLarge: CGFloat = 32
+public enum Margins: CGFloat {
+    case zero = 0
+    case small = 8
+    case medium = 16
+    case large = 24
+    case extraLarge = 32
+}
+
+public extension CGFloat {
+    static let small: CGFloat = Margins.small.rawValue
+    static let medium: CGFloat = Margins.medium.rawValue
+    static let large: CGFloat = Margins.large.rawValue
+    static let extraLarge: CGFloat = Margins.extraLarge.rawValue
 }

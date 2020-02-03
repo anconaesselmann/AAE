@@ -49,7 +49,7 @@ public class UserDefaultsStore: BaseInjectable, Storing {
         do {
             encoded = try encoder.encode(storable)
         } catch {
-            print("\(storable) can not be encoded")
+            Debug.printDebug("\(storable) can not be encoded")
             return
         }
         defaults.set(encoded, forKey: key)

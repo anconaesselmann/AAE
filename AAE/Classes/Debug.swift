@@ -64,15 +64,15 @@ public class Debug {
         #endif
     }
 
-    public static func print(_ string: String?) {
+    public static func printDebug(_ string: String?) {
         #if DEBUG
         log(string, group: DebugGroup.debug)
         #endif
     }
 
-    public static func print(_ strings: [String]?) {
+    public static func printDebug(_ strings: [String]?) {
         #if DEBUG
-        print(strings?.joined(separator: ", "))
+        printDebug(strings?.joined(separator: ", "))
         #endif
     }
 }

@@ -51,6 +51,7 @@ public class JsonCoder {
             let decoded = try decoder.decode(T.self, from: data)
             return decoded
         } catch {
+            Debug.log(error)
             return nil
         }
     }

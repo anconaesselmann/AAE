@@ -14,6 +14,17 @@ public extension UIButton {
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
     }
+
+    func setImage(_ image: UIImage, withMargins margins: CGFloat) {
+        setImage(image, for: .normal)
+        contentVerticalAlignment = .fill
+        contentHorizontalAlignment = .fill
+        imageEdgeInsets = UIEdgeInsets(
+            top: margins,
+            left: margins,
+            bottom: margins,
+            right: margins)
+    }
 }
 
 extension Reactive where Base : UIButton {
