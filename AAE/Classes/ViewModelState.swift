@@ -5,6 +5,7 @@
 import Foundation
 
 public enum ViewModelState<T> {
+    case inactive
     case loading
     case loaded(T)
     case error(Error)
@@ -39,6 +40,7 @@ extension ViewModelState: Equatable where T: Equatable {
 extension ViewModelState: TypelessRequestStatusConvertable {
     public var typeless: TypelessRequestStatus {
         switch self {
+        case .inactive: return .inProgress
         case .loading: return .inProgress
         case .loaded: return .success
         case .error(let error): return .error(error)

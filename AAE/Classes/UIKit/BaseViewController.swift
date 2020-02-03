@@ -5,6 +5,7 @@
 import UIKit
 import RxSwift
 import Contain
+import RxCocoa
 #if os(iOS)
 import constrain
 #endif
@@ -54,6 +55,8 @@ open class BaseViewController: UIViewController, Injectable {
     public func subscribe<T>(state: ObservableState<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
         state.observeOnMain().subscribeOnNext { [weak self] state in
             switch state {
+            case .inactive:
+                self?.hideLoader()
             case .loading: self?.showLoader(customLoadingComponent)
             case .loaded(let loaded):
                 self?.hideLoader()
@@ -68,9 +71,31 @@ open class BaseViewController: UIViewController, Injectable {
             }.disposed(by: bag)
     }
 
+    public func subscribe<T>(state driver: DrivableState<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
+        driver.drive(onNext: { [weak self] state in
+            switch state {
+            case .inactive:
+                self?.hideLoader()
+            case .loading: self?.showLoader(customLoadingComponent)
+            case .loaded(let loaded):
+                self?.hideLoader()
+                onLoaded?(loaded)
+            case .error(let error):
+                self?.hideLoader()
+                onError?(error)
+                if showDefaultErrorDialog {
+                    self?.present(error: error)
+                }
+            }
+        }).disposed(by: bag)
+    }
+
     public func subscribe<T>(state: ObservableState<T>) -> Observable<T> {
         return state.observeOnMain().map { [weak self] state -> T? in
             switch state {
+            case .inactive:
+                self?.hideLoader()
+                return nil
             case .loading:
                 self?.showLoader()
                 return nil

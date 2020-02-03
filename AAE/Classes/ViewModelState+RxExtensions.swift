@@ -4,8 +4,10 @@
 
 import RxSwift
 import RxOptional
+import RxCocoa
 
 public typealias ObservableState<T> = Observable<ViewModelState<T>>
+public typealias DrivableState<T> = Driver<ViewModelState<T>>
 public typealias BehaviourState<T> = BehaviorSubject<ViewModelState<T>>
 public typealias PublishState<T> = PublishSubject<ViewModelState<T>>
 
@@ -17,7 +19,7 @@ public protocol LoadableType {
 extension ViewModelState: LoadableType {
     public var loaded: T? {
         switch self {
-        case .loading, .error: return nil
+        case .inactive, .loading, .error: return nil
         case .loaded(let loaded): return loaded
         }
     }
@@ -40,6 +42,7 @@ extension ObservableType where Element: ViewModelStateConvertable {
         return subscribe(
             onNext: { stateConvertable in
                 switch stateConvertable.viewModelState {
+                case .inactive: break
                 case .loading: onLoading?()
                 case .loaded(let loadedValue): onLoaded?(loadedValue)
                 case .error(let error): onError?(error)
