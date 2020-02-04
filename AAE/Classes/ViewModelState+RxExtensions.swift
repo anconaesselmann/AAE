@@ -139,3 +139,16 @@ extension BehaviorSubject where Element: LoadableType {
     }
 
 }
+
+extension ObservableConvertibleType {
+    public func asDrivableState<T>(startWith maybeStartingState: ViewModelState<T>? = nil) -> DrivableState<T> where Element == ViewModelState<T> {
+        let driver = asDriver(onErrorRecover: {
+            .just(.error($0))
+        })
+        if let statingState = maybeStartingState {
+            return driver.startWith(statingState)
+        } else {
+            return driver
+        }
+    }
+}
