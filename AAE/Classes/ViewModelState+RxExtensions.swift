@@ -152,3 +152,49 @@ extension ObservableConvertibleType {
         }
     }
 }
+
+extension Observable {
+    public func with<T>(_ instance: T?) -> Observable<(Element, T)> {
+        guard let instance = instance else {
+            return .empty()
+        }
+        return map { element -> (Element, T) in
+            return (element, instance)
+        }
+    }
+
+    public func with<T, O1, O2>(_ instance: T?) -> Observable<(O1, O2, T)> where Element == (O1, O2) {
+        guard let instance = instance else {
+            return .empty()
+        }
+        return map { ($0.0, $0.1, instance) }
+    }
+
+    public func with<T, O1, O2, O3>(_ instance: T?) -> Observable<(O1, O2, O3, T)> where Element == (O1, O2, O3) {
+        guard let instance = instance else {
+            return .empty()
+        }
+        return map { ($0.0, $0.1, $0.2, instance) }
+    }
+
+    public func with<T, O1, O2, O3, O4>(_ instance: T?) -> Observable<(O1, O2, O3, O4, T)> where Element == (O1, O2, O3, O4) {
+        guard let instance = instance else {
+            return .empty()
+        }
+        return map { ($0.0, $0.1, $0.2, $0.3, instance) }
+    }
+
+    public func with<T, O1, O2, O3, O4, O5>(_ instance: T?) -> Observable<(O1, O2, O3, O4, O5, T)> where Element == (O1, O2, O3, O4, O5) {
+        guard let instance = instance else {
+            return .empty()
+        }
+        return map { ($0.0, $0.1, $0.2, $0.3, $0.4, instance) }
+    }
+
+    public func with<T, O1, O2, O3, O4, O5, O6>(_ instance: T?) -> Observable<(O1, O2, O3, O4, O5, O6, T)> where Element == (O1, O2, O3, O4, O5, O6) {
+        guard let instance = instance else {
+            return .empty()
+        }
+        return map { ($0.0, $0.1, $0.2, $0.3, $0.4, $0.5, instance) }
+    }
+}
