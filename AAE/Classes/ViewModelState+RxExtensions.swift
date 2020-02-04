@@ -5,6 +5,7 @@
 import RxSwift
 import RxOptional
 import RxCocoa
+import RxOptional
 
 public typealias ObservableState<T> = Observable<ViewModelState<T>>
 public typealias DrivableState<T> = Driver<ViewModelState<T>>
@@ -196,5 +197,14 @@ extension Observable {
             return .empty()
         }
         return map { ($0.0, $0.1, $0.2, $0.3, $0.4, $0.5, instance) }
+    }
+
+    public func filterNils<O1, O2, O3>() -> Observable<(O1, O2, O3)> where Element == (O1?, O2?, O3?) {
+        return map { (tuple: (O1?, O2?, O3?)) -> (O1, O2, O3)? in
+            guard let t0 = tuple.0, let t1 = tuple.1, let t2 = tuple.2 else {
+                return nil
+            }
+            return (t0, t1, t2)
+        }.filterNil()
     }
 }
