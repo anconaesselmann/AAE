@@ -12,6 +12,9 @@ public typealias DrivableState<T> = Driver<ViewModelState<T>>
 public typealias BehaviourState<T> = BehaviorSubject<ViewModelState<T>>
 public typealias PublishState<T> = PublishSubject<ViewModelState<T>>
 
+public typealias ButtonDriver = Driver<Void>
+public typealias ButtonDrivable = ControlEvent<Void>
+
 public protocol LoadableType {
     associatedtype LoadedType
     var loaded: LoadedType? { get }
@@ -142,6 +145,19 @@ extension BehaviorSubject where Element: LoadableType {
 }
 
 extension ObservableConvertibleType {
+    public func asDrivableState<T>(startWith startingState: ViewModelState<T>) -> DrivableState<T> where Element == ViewModelState<T> {
+        let driver = asDriver(onErrorRecover: {
+            .just(.error($0))
+        })
+        return driver.startWith(startingState)
+    }
+
+    public func asDrivableState(startWith startingState: ViewModelState<Element>) -> DrivableState<Element> {
+        return asObservable()
+            .map { .loaded($0) }
+            .asDriver(onErrorJustReturn: .error(AAError.unknown))
+    }
+
     public func asDrivableState<T>(startWith maybeStartingState: ViewModelState<T>? = nil) -> DrivableState<T> where Element == ViewModelState<T> {
         let driver = asDriver(onErrorRecover: {
             .just(.error($0))
