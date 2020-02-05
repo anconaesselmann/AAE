@@ -16,6 +16,8 @@ open class BaseViewController: UIViewController, Injectable {
     public let bag = DisposeBag()
     public let container: ContainerProtocol
 
+    public let viewState = PublishSubject<ViewModelState<Void>>()
+
     public required init(container: ContainerProtocol) {
         self.container = container
         super.init(nibName: nil, bundle: nil)
@@ -50,6 +52,7 @@ open class BaseViewController: UIViewController, Injectable {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        subscribe(state: viewState, onLoaded: nil)
     }
 
     public func subscribe<T>(state: ObservableState<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {

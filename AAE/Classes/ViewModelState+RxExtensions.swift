@@ -247,6 +247,25 @@ extension ObservableType {
         }
     }
 
+    public func unpack<T, Observer>(withStateObserver stateObserver: Observer) -> Observable<T> where Element == ViewModelState<T>, Observer : RxSwift.ObserverType, Observer.Element == ViewModelState<Void> {
+        return map { state -> T? in
+            switch state {
+            case .inactive:
+                stateObserver.onNext(.inactive)
+                return nil
+            case .loading:
+                stateObserver.onNext(.loading)
+                return nil
+            case .loaded(let unpacked):
+                stateObserver.onNext(ViewModelState.loaded(()))
+                return unpacked
+            case .error(let error):
+                stateObserver.onNext(.error(error))
+                return nil
+            }
+        }.filterNil()
+    }
+
     public func unpack<T>(whenNotLoaded: T) -> Observable<T> where Element == ViewModelState<T> {
         return unpack(
             whenInactive: whenNotLoaded,
