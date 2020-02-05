@@ -224,3 +224,75 @@ extension Observable {
         }.filterNil()
     }
 }
+
+extension ObservableType {
+
+    /// Exposes the loaded state of a ViewModelState and provides ability to give defaults for non-loaded states
+    public func unpack<T>(
+        whenInactive: T? = nil,
+        whenLoading: T? = nil,
+        whenError: T? = nil
+    ) -> Observable<T?> where Element == ViewModelState<T> {
+        return map { state -> T? in
+            switch state {
+            case .inactive:
+                return whenInactive
+            case .loading:
+                return whenLoading
+            case .loaded(let unpacked):
+                return unpacked
+            case .error:
+                return whenError
+            }
+        }
+    }
+
+    public func unpack<T>(whenNotLoaded: T) -> Observable<T> where Element == ViewModelState<T> {
+        return unpack(
+            whenInactive: whenNotLoaded,
+            whenLoading: whenNotLoaded,
+            whenError: whenNotLoaded
+        ).filterNil()
+    }
+}
+
+extension Driver {
+    /// Exposes the loaded state of a ViewModelState and provides ability to give defaults for non-loaded states
+    public func unpack<T>(
+        whenInactive: T? = nil,
+        whenLoading: T? = nil,
+        whenError: T? = nil
+    ) -> Driver<T?> where Element == ViewModelState<T> {
+        return map { state -> T? in
+            switch state {
+            case .inactive:
+                return whenInactive
+            case .loading:
+                return whenLoading
+            case .loaded(let unpacked):
+                return unpacked
+            case .error:
+                return whenError
+            }
+        }.asDriver(onErrorJustReturn: whenError)
+    }
+
+    public func unpack<T>(whenNotLoaded: T) -> Driver<T> where Element == ViewModelState<T> {
+        return unpack(
+            whenInactive: whenNotLoaded,
+            whenLoading: whenNotLoaded,
+            whenError: whenNotLoaded
+        ).filterNil()
+    }
+
+}
+
+extension Driver {
+    public func mapDriver<Result>(_ selector: @escaping (Self.Element) -> Result) -> Driver<Result>
+    {
+        return map(selector)
+            .map { $0 as Result? }
+            .asDriver(onErrorJustReturn: nil)
+            .filterNil()
+    }
+}
