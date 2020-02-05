@@ -57,7 +57,8 @@ open class BaseViewController: UIViewController, Injectable {
             switch state {
             case .inactive:
                 self?.hideLoader()
-            case .loading: self?.showLoader(customLoadingComponent)
+            case .loading:
+                self?.showLoader(customLoadingComponent)
             case .loaded(let loaded):
                 self?.hideLoader()
                 onLoaded?(loaded)
@@ -108,6 +109,17 @@ open class BaseViewController: UIViewController, Injectable {
                 return nil
             }
         }.filterNil()
+    }
+
+    public func drive<T>(_ driver: Driver<T>, onNext: @escaping ((T) -> Void)) {
+        let state = driver.asDrivableState(startWith: .inactive)
+        subscribe(
+            state: state,
+            customLoadingComponent: nil,
+            onLoaded: onNext,
+            onError: nil,
+            showDefaultErrorDialog: true
+        )
     }
 
     public func present(error: Error) {
