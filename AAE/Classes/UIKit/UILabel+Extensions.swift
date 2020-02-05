@@ -23,7 +23,7 @@ public struct LabelStyle {
 }
 
 public extension UILabel {
-    convenience init(text: String, font: UIFont? = nil, numberOfLines: Int? = nil) {
+    convenience init(text: String?, font: UIFont? = nil, numberOfLines: Int? = nil) {
         self.init(frame: CGRect.zero)
         self.text = text
         if let font = font {
@@ -34,7 +34,7 @@ public extension UILabel {
         }
     }
 
-    convenience init(text: String, style: LabelStyle) {
+    convenience init(text: String? = nil, style: LabelStyle) {
         self.init(text: text)
         if let textColor = style.textColor {
             self.textColor = textColor
