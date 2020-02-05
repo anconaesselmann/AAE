@@ -133,9 +133,17 @@ open class BaseViewController: UIViewController, Injectable {
     }
 
     public func present(message: String) {
+        let errorAlert = UIViewController.popup(withMessage: message)
+        present(errorAlert, animated: true, completion: nil)
+    }
+
+}
+
+extension UIViewController {
+    static public func popup(withMessage message: String) -> UIViewController {
         let errorAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(errorAlert, animated: true, completion: nil)
+        return errorAlert
     }
 }
 
