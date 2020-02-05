@@ -55,7 +55,7 @@ open class BaseViewController: UIViewController, Injectable {
         subscribe(state: viewState, onLoaded: nil)
     }
 
-    public func subscribe<T>(state: ObservableState<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
+    public func subscribe<T>(state: LoadingObservable<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
         state.observeOnMain().subscribeOnNext { [weak self] state in
             switch state {
             case .inactive:
@@ -94,7 +94,7 @@ open class BaseViewController: UIViewController, Injectable {
         }).disposed(by: bag)
     }
 
-    public func subscribe<T>(state: ObservableState<T>) -> Observable<T> {
+    public func subscribe<T>(state: LoadingObservable<T>) -> Observable<T> {
         return state.observeOnMain().map { [weak self] state -> T? in
             switch state {
             case .inactive:

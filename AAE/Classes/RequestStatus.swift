@@ -41,7 +41,7 @@ extension RequestStatus: LoadableResultConvertable {
 }
 
 public extension ObservableType where Element: LoadableResultConvertable  {
-    var loadableResult: ObservableState<Element.LoadableResultData> {
+    var loadableResult: LoadingObservable<Element.LoadableResultData> {
         return self.map { (element: Element) -> LoadableResult<Element.LoadableResultData> in
             let state: LoadableResult<Element.LoadableResultData> = element.loadableResult
             return state

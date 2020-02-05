@@ -7,9 +7,9 @@ import RxOptional
 import RxCocoa
 import RxOptional
 
-public typealias ObservableState<T> = Observable<LoadableResult<T>>
+public typealias LoadingObservable<T> = Observable<LoadableResult<T>>
 public typealias DrivableState<T> = Driver<LoadableResult<T>>
-public typealias BehaviourState<T> = BehaviorSubject<LoadableResult<T>>
+public typealias LoadableBehaviorSubject<T> = BehaviorSubject<LoadableResult<T>>
 public typealias PublishState<T> = PublishSubject<LoadableResult<T>>
 
 public typealias ButtonDriver = Driver<Void>
@@ -225,6 +225,50 @@ extension Observable {
     }
 }
 
+extension LoadableResult  {
+    /// Exposes the loaded state of a LoadableResult and provides ability to give defaults for non-loaded states
+    public func unpack<Element>(
+        whenInactive: Element? = nil,
+        whenLoading: Element? = nil,
+        whenError: Element? = nil
+    ) -> Element? {
+        return map { state -> Element? in
+            switch state {
+            case .inactive:
+                return whenInactive
+            case .loading:
+                return whenLoading
+            case .loaded:
+                return self.loaded as? Element
+            case .error:
+                return whenError
+            }
+        }
+    }
+
+    public func unpack<Element>(whenNotLoaded: Element) -> Element {
+        return unpack(
+            whenInactive: whenNotLoaded,
+            whenLoading: whenNotLoaded,
+            whenError: whenNotLoaded
+        ) ?? whenNotLoaded
+    }
+}
+
+extension BehaviorSubject {
+    public func unpack<T>(
+        whenInactive: T? = nil,
+        whenLoading: T? = nil,
+        whenError: T? = nil
+    ) -> Observable<T?> where Element == LoadableResult<T> {
+        return asObservable().unpack(
+            whenInactive: whenInactive,
+            whenLoading : whenLoading,
+            whenError : whenError
+        )
+    }
+}
+
 extension ObservableType {
 
     /// Exposes the loaded state of a LoadableResult and provides ability to give defaults for non-loaded states
@@ -317,7 +361,7 @@ extension Driver {
 }
 
 extension Observable {
-    public func mapLoadableResult<T, Result>(_ transform: @escaping (T) -> Result) -> ObservableState<Result> where Element == LoadableResult<T> {
+    public func mapLoadableResult<T, Result>(_ transform: @escaping (T) -> Result) -> LoadingObservable<Result> where Element == LoadableResult<T> {
         return map { (state: LoadableResult<T>) -> LoadableResult<Result> in
             switch state {
             case .inactive:
@@ -332,7 +376,7 @@ extension Observable {
         }
     }
 
-    public func mapLoadableResult<T, Result>(_ transform: @escaping (T) -> LoadableResult<Result>) -> ObservableState<Result> where Element == LoadableResult<T> {
+    public func mapLoadableResult<T, Result>(_ transform: @escaping (T) -> LoadableResult<Result>) -> LoadingObservable<Result> where Element == LoadableResult<T> {
         return map { (state: LoadableResult<T>) -> LoadableResult<Result> in
             switch state {
             case .inactive:
