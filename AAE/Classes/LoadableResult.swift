@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum ViewModelState<T> {
+public enum LoadableResult<T> {
     case inactive
     case loading
     case loaded(T)
@@ -19,15 +19,15 @@ public enum ViewModelState<T> {
     }
 
     // TODO: Very basic implementation of map. Does not handle exceptions.
-    public func map<E>(_ transform: @escaping (ViewModelState<T>) -> E) -> E {
+    public func map<E>(_ transform: @escaping (LoadableResult<T>) -> E) -> E {
         return transform(self)
     }
 
 }
 
 /// Error types are not compared to determine equality, only the fact that an error occured.
-extension ViewModelState: Equatable where T: Equatable {
-    public static func == (lhs: ViewModelState<T>, rhs: ViewModelState<T>) -> Bool {
+extension LoadableResult: Equatable where T: Equatable {
+    public static func == (lhs: LoadableResult<T>, rhs: LoadableResult<T>) -> Bool {
         switch (lhs, rhs) {
         case (.loading, .loading): return true
         case (.error, .error): return true
@@ -37,7 +37,7 @@ extension ViewModelState: Equatable where T: Equatable {
     }
 }
 
-extension ViewModelState: TypelessRequestStatusConvertable {
+extension LoadableResult: TypelessRequestStatusConvertable {
     public var typeless: TypelessRequestStatus {
         switch self {
         case .inactive: return .inProgress

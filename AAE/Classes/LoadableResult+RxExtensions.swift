@@ -7,10 +7,10 @@ import RxOptional
 import RxCocoa
 import RxOptional
 
-public typealias ObservableState<T> = Observable<ViewModelState<T>>
-public typealias DrivableState<T> = Driver<ViewModelState<T>>
-public typealias BehaviourState<T> = BehaviorSubject<ViewModelState<T>>
-public typealias PublishState<T> = PublishSubject<ViewModelState<T>>
+public typealias ObservableState<T> = Observable<LoadableResult<T>>
+public typealias DrivableState<T> = Driver<LoadableResult<T>>
+public typealias BehaviourState<T> = BehaviorSubject<LoadableResult<T>>
+public typealias PublishState<T> = PublishSubject<LoadableResult<T>>
 
 public typealias ButtonDriver = Driver<Void>
 public typealias ButtonDrivable = ControlEvent<Void>
@@ -20,7 +20,7 @@ public protocol LoadableType {
     var loaded: LoadedType? { get }
 }
 
-extension ViewModelState: LoadableType {
+extension LoadableResult: LoadableType {
     public var loaded: T? {
         switch self {
         case .inactive, .loading, .error: return nil
@@ -29,23 +29,23 @@ extension ViewModelState: LoadableType {
     }
 }
 
-extension ViewModelState: ViewModelStateConvertable {
-    public var viewModelState: ViewModelState<LoadedType> {
+extension LoadableResult: LoadableResultConvertable {
+    public var loadableResult: LoadableResult<LoadedType> {
         return self
     }
 }
 
-extension ObservableType where Element: ViewModelStateConvertable {
+extension ObservableType where Element: LoadableResultConvertable {
     public func subscribe(
         onLoading: (() -> Void)? = nil,
-        onLoaded: ((Element.ViewModelStateData) -> Void)? = nil,
+        onLoaded: ((Element.LoadableResultData) -> Void)? = nil,
         onError: ((Swift.Error) -> Void)? = nil,
         onCompleted: (() -> Void)? = nil,
         onDisposed: (() -> Void)? = nil
     ) -> Disposable {
         return subscribe(
             onNext: { stateConvertable in
-                switch stateConvertable.viewModelState {
+                switch stateConvertable.loadableResult {
                 case .inactive: break
                 case .loading: onLoading?()
                 case .loaded(let loadedValue): onLoaded?(loadedValue)
@@ -64,14 +64,14 @@ extension ObservableType where Element: ViewModelStateConvertable {
         )
     }
 
-    public func bindViewModelState<O>(to observer: O?, behavior: ViewModelBindingBehaviour = .default, onLoaded: ((Element.ViewModelStateData) -> Void)? = nil) -> Disposable where Self.Element: ViewModelStateConvertable, O: ObserverType, Self.Element == O.Element {
+    public func bindLoadableResult<O>(to observer: O?, behavior: ViewModelBindingBehaviour = .default, onLoaded: ((Element.LoadableResultData) -> Void)? = nil) -> Disposable where Self.Element: LoadableResultConvertable, O: ObserverType, Self.Element == O.Element {
         return self.subscribe(
             onNext: { stateConvertable in
                 guard let onLoaded = onLoaded else {
                     observer?.onNext(stateConvertable)
                     return
                 }
-                switch (behavior, stateConvertable.viewModelState) {
+                switch (behavior, stateConvertable.loadableResult) {
                 case (.`default`, .loaded(let loadedValue)):
                     observer?.onNext(stateConvertable)
                     onLoaded(loadedValue)
@@ -145,20 +145,20 @@ extension BehaviorSubject where Element: LoadableType {
 }
 
 extension ObservableConvertibleType {
-    public func asDrivableState<T>(startWith startingState: ViewModelState<T>) -> DrivableState<T> where Element == ViewModelState<T> {
+    public func asDrivableState<T>(startWith startingState: LoadableResult<T>) -> DrivableState<T> where Element == LoadableResult<T> {
         let driver = asDriver(onErrorRecover: {
             .just(.error($0))
         })
         return driver.startWith(startingState)
     }
 
-    public func asDrivableState(startWith startingState: ViewModelState<Element>) -> DrivableState<Element> {
+    public func asDrivableState(startWith startingState: LoadableResult<Element>) -> DrivableState<Element> {
         return asObservable()
             .map { .loaded($0) }
             .asDriver(onErrorJustReturn: .error(AAError.unknown))
     }
 
-    public func asDrivableState<T>(startWith maybeStartingState: ViewModelState<T>? = nil) -> DrivableState<T> where Element == ViewModelState<T> {
+    public func asDrivableState<T>(startWith maybeStartingState: LoadableResult<T>? = nil) -> DrivableState<T> where Element == LoadableResult<T> {
         let driver = asDriver(onErrorRecover: {
             .just(.error($0))
         })
@@ -227,12 +227,12 @@ extension Observable {
 
 extension ObservableType {
 
-    /// Exposes the loaded state of a ViewModelState and provides ability to give defaults for non-loaded states
+    /// Exposes the loaded state of a LoadableResult and provides ability to give defaults for non-loaded states
     public func unpack<T>(
         whenInactive: T? = nil,
         whenLoading: T? = nil,
         whenError: T? = nil
-    ) -> Observable<T?> where Element == ViewModelState<T> {
+    ) -> Observable<T?> where Element == LoadableResult<T> {
         return map { state -> T? in
             switch state {
             case .inactive:
@@ -247,7 +247,7 @@ extension ObservableType {
         }
     }
 
-    public func unpack<T, Observer>(withStateObserver stateObserver: Observer) -> Observable<T> where Element == ViewModelState<T>, Observer : RxSwift.ObserverType, Observer.Element == ViewModelState<Void> {
+    public func unpack<T, Observer>(withStateObserver stateObserver: Observer) -> Observable<T> where Element == LoadableResult<T>, Observer : RxSwift.ObserverType, Observer.Element == LoadableResult<Void> {
         return map { state -> T? in
             switch state {
             case .inactive:
@@ -257,7 +257,7 @@ extension ObservableType {
                 stateObserver.onNext(.loading)
                 return nil
             case .loaded(let unpacked):
-                stateObserver.onNext(ViewModelState.loaded(()))
+                stateObserver.onNext(LoadableResult.loaded(()))
                 return unpacked
             case .error(let error):
                 stateObserver.onNext(.error(error))
@@ -266,7 +266,7 @@ extension ObservableType {
         }.filterNil()
     }
 
-    public func unpack<T>(whenNotLoaded: T) -> Observable<T> where Element == ViewModelState<T> {
+    public func unpack<T>(whenNotLoaded: T) -> Observable<T> where Element == LoadableResult<T> {
         return unpack(
             whenInactive: whenNotLoaded,
             whenLoading: whenNotLoaded,
@@ -276,12 +276,12 @@ extension ObservableType {
 }
 
 extension Driver {
-    /// Exposes the loaded state of a ViewModelState and provides ability to give defaults for non-loaded states
+    /// Exposes the loaded state of a LoadableResult and provides ability to give defaults for non-loaded states
     public func unpack<T>(
         whenInactive: T? = nil,
         whenLoading: T? = nil,
         whenError: T? = nil
-    ) -> Driver<T?> where Element == ViewModelState<T> {
+    ) -> Driver<T?> where Element == LoadableResult<T> {
         return map { state -> T? in
             switch state {
             case .inactive:
@@ -296,7 +296,7 @@ extension Driver {
         }.asDriver(onErrorJustReturn: whenError)
     }
 
-    public func unpack<T>(whenNotLoaded: T) -> Driver<T> where Element == ViewModelState<T> {
+    public func unpack<T>(whenNotLoaded: T) -> Driver<T> where Element == LoadableResult<T> {
         return unpack(
             whenInactive: whenNotLoaded,
             whenLoading: whenNotLoaded,
@@ -317,8 +317,8 @@ extension Driver {
 }
 
 extension Observable {
-    public func mapViewModelState<T, Result>(_ transform: @escaping (T) -> Result) -> ObservableState<Result> where Element == ViewModelState<T> {
-        return map { (state: ViewModelState<T>) -> ViewModelState<Result> in
+    public func mapLoadableResult<T, Result>(_ transform: @escaping (T) -> Result) -> ObservableState<Result> where Element == LoadableResult<T> {
+        return map { (state: LoadableResult<T>) -> LoadableResult<Result> in
             switch state {
             case .inactive:
                 return .inactive
@@ -332,8 +332,8 @@ extension Observable {
         }
     }
 
-    public func mapViewModelState<T, Result>(_ transform: @escaping (T) -> ViewModelState<Result>) -> ObservableState<Result> where Element == ViewModelState<T> {
-        return map { (state: ViewModelState<T>) -> ViewModelState<Result> in
+    public func mapLoadableResult<T, Result>(_ transform: @escaping (T) -> LoadableResult<Result>) -> ObservableState<Result> where Element == LoadableResult<T> {
+        return map { (state: LoadableResult<T>) -> LoadableResult<Result> in
             switch state {
             case .inactive:
                 return .inactive

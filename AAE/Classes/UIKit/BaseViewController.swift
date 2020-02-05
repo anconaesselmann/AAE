@@ -16,7 +16,7 @@ open class BaseViewController: UIViewController, Injectable {
     public let bag = DisposeBag()
     public let container: ContainerProtocol
 
-    public let viewState = PublishSubject<ViewModelState<Void>>()
+    public let viewState = PublishSubject<LoadableResult<Void>>()
 
     public required init(container: ContainerProtocol) {
         self.container = container

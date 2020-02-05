@@ -16,9 +16,9 @@ public enum TypelessRequestStatus {
     case error(Error)
 }
 
-public protocol ViewModelStateConvertable {
-    associatedtype ViewModelStateData
-    var viewModelState: ViewModelState<ViewModelStateData> { get }
+public protocol LoadableResultConvertable {
+    associatedtype LoadableResultData
+    var loadableResult: LoadableResult<LoadableResultData> { get }
 }
 
 public enum RequestStatus<RequestData, ResponseData, ErrorType> where ErrorType: Error {
@@ -28,8 +28,8 @@ public enum RequestStatus<RequestData, ResponseData, ErrorType> where ErrorType:
     case error(ErrorType)
 }
 
-extension RequestStatus: ViewModelStateConvertable {
-    public var viewModelState: ViewModelState<ResponseData> {
+extension RequestStatus: LoadableResultConvertable {
+    public var loadableResult: LoadableResult<ResponseData> {
         switch self {
         case .unknown:
             return .error(AAError.unknown)
@@ -40,10 +40,10 @@ extension RequestStatus: ViewModelStateConvertable {
     }
 }
 
-public extension ObservableType where Element: ViewModelStateConvertable  {
-    var viewModelState: ObservableState<Element.ViewModelStateData> {
-        return self.map { (element: Element) -> ViewModelState<Element.ViewModelStateData> in
-            let state: ViewModelState<Element.ViewModelStateData> = element.viewModelState
+public extension ObservableType where Element: LoadableResultConvertable  {
+    var loadableResult: ObservableState<Element.LoadableResultData> {
+        return self.map { (element: Element) -> LoadableResult<Element.LoadableResultData> in
+            let state: LoadableResult<Element.LoadableResultData> = element.loadableResult
             return state
         }
     }
