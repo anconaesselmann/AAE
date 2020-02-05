@@ -59,6 +59,10 @@ public extension ObservableType {
         return self.observeOn(MainScheduler.asyncInstance)
     }
 
+    func subscribeOnMain() -> RxSwift.Observable<Self.Element> {
+        return self.subscribeOn(MainScheduler.asyncInstance)
+    }
+
 }
 
 extension ObservableType {
