@@ -296,3 +296,35 @@ extension Driver {
             .filterNil()
     }
 }
+
+extension Observable {
+    public func mapViewModelState<T, Result>(_ transform: @escaping (T) -> Result) -> ObservableState<Result> where Element == ViewModelState<T> {
+        return map { (state: ViewModelState<T>) -> ViewModelState<Result> in
+            switch state {
+            case .inactive:
+                return .inactive
+            case .loading:
+                return .loading
+            case .loaded(let before):
+                return .loaded(transform(before))
+            case .error(let error):
+                return .error(error)
+            }
+        }
+    }
+
+    public func mapViewModelState<T, Result>(_ transform: @escaping (T) -> ViewModelState<Result>) -> ObservableState<Result> where Element == ViewModelState<T> {
+        return map { (state: ViewModelState<T>) -> ViewModelState<Result> in
+            switch state {
+            case .inactive:
+                return .inactive
+            case .loading:
+                return .loading
+            case .loaded(let before):
+                return transform(before)
+            case .error(let error):
+                return .error(error)
+            }
+        }
+    }
+}
