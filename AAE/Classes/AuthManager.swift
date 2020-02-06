@@ -18,68 +18,53 @@ public class AuthManager {
         }
     }
 
-    struct StorageKeys {
-        static let auth = "AuthManager.auth"
-    }
-
     // TODO: Inject more sensible storage
-    let storage: UserDefaults
+    private let storage: UserDefaults
 
-    // Right now this allows outside classes to log a user in
-    public let loginStatus: LoadableBehaviorSubject<AuthenticationStatus>
+    private let loginStatus: LoadableBehaviorSubject<AuthenticationStatus>
+
+    private let bag = DisposeBag()
+
+    public var status: Observable<AuthenticationStatus> {
+        return loginStatus
+        .unpack(whenNotLoaded: .loggedOut)
+    }
 
     public var isLoggedIn: Observable<Bool> {
-        return loginStatus
-            .unpack(whenNotLoaded: .loggedOut)
-            .map { $0.isLoggedIn }
+        return status.map { $0.isLoggedIn }
     }
 
-    public var auth: AuthData? {
-        get {
-            let loadableResult: LoadableResult<AuthenticationStatus> = loginStatus.safeValue ?? .error(AAError.deinitialized)
-            let status: AuthenticationStatus = loadableResult.unpack() ?? .loggedOut
+    public var auth: Observable<AuthData?> {
+        return status.map { status in
             switch status {
             case .loggedOut: return nil
             case .loggedIn(let auth): return auth
-            }
-        }
-        set {
-            guard let auth = newValue else {
-                storage.removeObject(forKey: StorageKeys.auth)
-                loginStatus.onNext(.loaded(.loggedOut))
-                return
-            }
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            do {
-                let encoded = try encoder.encode(auth)
-                storage.set(encoded, forKey: StorageKeys.auth)
-                loginStatus.onNext(.loaded(.loggedIn(auth)))
-            } catch {
-                Debug.log(error)
-                loginStatus.onNext(.loaded(.loggedOut))
-                return
             }
         }
     }
 
     public init(storage: UserDefaults = UserDefaults.standard) {
         self.storage = storage
-        let loginState: LoadableResult<AuthenticationStatus>
-        if let authData = storage.object(forKey: StorageKeys.auth) as? Data {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let decodedAuth = try decoder.decode(AuthData.self, from: authData)
-                loginState = .loaded(.loggedIn(decodedAuth))
-            } catch {
-                loginState = .loaded(.loggedOut)
-                Debug.log(error)
-            }
-        } else {
-            loginState = .loaded(.loggedOut)
-        }
+        let loginState = AuthCacheHelper.loginStatus(from: storage)
         loginStatus = LoadableBehaviorSubject<AuthenticationStatus>(value: loginState)
+
+        self.loginStatus.asObservable()
+            .unpack(whenNotLoaded: .loggedOut)
+            .with(storage)
+            .subscribeOnNext { AuthCacheHelper.cache(loginState: $0.0, storage: $0.1) }
+            .disposed(by: bag)
+    }
+
+    public func logout() {
+        loginStatus.onNext(.loaded(.loggedOut))
+    }
+
+    public func login(authData: AuthData) {
+        loginStatus.onNext(.loaded(.loggedIn(authData)))
+    }
+
+    public func loading() {
+        loginStatus.onNext(.loading)
     }
 
 }
