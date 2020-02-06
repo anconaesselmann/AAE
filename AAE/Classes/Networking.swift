@@ -5,11 +5,12 @@
 import Alamofire
 import RxSwift
 
-public enum NetworkingError: Error {
-    case notAuthorized
-}
-
 public class Networking {
+
+    public enum NetworkingError: Error {
+        case notAuthorized
+        case typeMismatch
+    }
 
     public enum HeaderKeys: String, StringRepresentable {
         case contentType = "Content-Type"
