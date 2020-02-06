@@ -6,6 +6,7 @@ import RxSwift
 import RxOptional
 import RxCocoa
 import RxOptional
+import LoadableResult
 
 public typealias LoadingObservable<T> = Observable<LoadableResult<T>>
 public typealias DrivableState<T> = Driver<LoadableResult<T>>
@@ -14,26 +15,6 @@ public typealias PublishState<T> = PublishSubject<LoadableResult<T>>
 
 public typealias ButtonDriver = Driver<Void>
 public typealias ButtonDrivable = ControlEvent<Void>
-
-public protocol LoadableType {
-    associatedtype LoadedType
-    var loaded: LoadedType? { get }
-}
-
-extension LoadableResult: LoadableType {
-    public var loaded: T? {
-        switch self {
-        case .inactive, .loading, .error: return nil
-        case .loaded(let loaded): return loaded
-        }
-    }
-}
-
-extension LoadableResult: LoadableResultConvertable {
-    public var loadableResult: LoadableResult<LoadedType> {
-        return self
-    }
-}
 
 extension ObservableType where Element: LoadableResultConvertable {
     public func subscribe(
@@ -388,6 +369,15 @@ extension Observable {
             case .error(let error):
                 return .error(error)
             }
+        }
+    }
+}
+
+public extension ObservableType where Element: LoadableResultConvertable  {
+    var loadableResult: LoadingObservable<Element.LoadableResultData> {
+        return self.map { (element: Element) -> LoadableResult<Element.LoadableResultData> in
+            let state: LoadableResult<Element.LoadableResultData> = element.loadableResult
+            return state
         }
     }
 }

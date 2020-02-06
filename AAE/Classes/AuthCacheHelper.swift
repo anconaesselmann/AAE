@@ -1,7 +1,7 @@
 //  Created by Axel Ancona Esselmann on 2/5/20.
 //
 
-import Foundation
+import LoadableResult
 
 struct AuthCacheHelper {
 

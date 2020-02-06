@@ -33,4 +33,5 @@ These are extensions and classes that I use across projects.
   s.dependency 'Alamofire', '= 5.0.0-rc.1'
   s.ios.dependency 'constrain'
   s.ios.dependency 'Contain'
+  s.ios.dependency 'LoadableResult'
 end
