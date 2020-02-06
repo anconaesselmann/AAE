@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AAE'
-  s.version          = '0.3.4'
+  s.version          = '0.3.5'
   s.summary          = 'A collection of utility classes and extensions'
   s.swift_version    = '5.0'
 
