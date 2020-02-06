@@ -3,6 +3,7 @@
 //
 
 import RxSwift
+import RxLoadableResult
 
 public class AuthManager {
 

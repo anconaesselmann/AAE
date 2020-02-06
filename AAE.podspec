@@ -34,4 +34,5 @@ These are extensions and classes that I use across projects.
   s.ios.dependency 'constrain'
   s.ios.dependency 'Contain'
   s.ios.dependency 'LoadableResult'
+  s.ios.dependency 'RxLoadableResult'
 end

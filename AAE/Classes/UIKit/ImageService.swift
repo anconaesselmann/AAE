@@ -6,6 +6,7 @@ import UIKit
 import RxSwift
 import SDWebImage
 import Contain
+import RxLoadableResult
 
 public protocol ImageServing {
     func image(for url: URL) -> Single<UIImage>
