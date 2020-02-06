@@ -3,6 +3,7 @@
 //
 
 import RxSwift
+import RxRelay
 
 public extension ObservableType {
     func subscribeOnNext(_ subscription: @escaping (Element) -> Void) -> Disposable {
@@ -68,5 +69,11 @@ public extension ObservableType {
 extension ObservableType {
     public static var deinitialized: RxSwift.Observable<Self.Element> {
         return Observable<Self.Element>.error(AAError.deinitialized)
+    }
+}
+
+extension BehaviorRelay where Element: RangeReplaceableCollection {
+    func appendUnique(_ element: Element.Element, where comparison: (Element.Element, Element.Element) -> Bool) {
+        accept(value.appendedUnique(element, where: comparison))
     }
 }
