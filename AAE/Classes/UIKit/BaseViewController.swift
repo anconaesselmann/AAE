@@ -156,4 +156,18 @@ extension UIViewController {
     }
 }
 
+extension Reactive where Base: BaseViewController {
+    public var shouldDismissAnimated: Binder<Void> {
+        return Binder(self.base) { vc, _ in
+            vc.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    public var shouldDismissNotAnimated: Binder<Void> {
+        return Binder(self.base) { vc, _ in
+            vc.dismiss(animated: false, completion: nil)
+        }
+    }
+}
+
 #endif
