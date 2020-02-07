@@ -13,7 +13,7 @@ import constrain
 #endif
 
 #if os(iOS)
-open class BaseViewController: UIViewController, Injectable {
+open class BaseViewController: UIViewController, Injectable, FailableInjectable {
 
     public let bag = DisposeBag()
     public let container: ContainerProtocol
@@ -24,6 +24,10 @@ open class BaseViewController: UIViewController, Injectable {
         self.container = container
         super.init(nibName: nil, bundle: nil)
         container.inject(self)
+    }
+
+    public required convenience init?(failableWithContainer container: ContainerProtocol) {
+        self.init(container: container)
     }
 
     @available(*, unavailable)
