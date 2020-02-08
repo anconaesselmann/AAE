@@ -175,7 +175,7 @@ public protocol Navigator: class {
 }
 
 public protocol Navigating where N: Navigator {
-    
+
     associatedtype N
 
     var navigationManager: N? { get }

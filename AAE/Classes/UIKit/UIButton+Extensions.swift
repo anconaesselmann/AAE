@@ -9,7 +9,7 @@ import RxCocoa
 #if os(iOS)
 
 public extension UIButton {
-    convenience init(title: String, titleColor: UIColor? = nil) {
+    convenience init(title: String? = nil, titleColor: UIColor? = nil) {
         self.init(frame: CGRect.zero)
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)

@@ -5,6 +5,11 @@
 import Foundation
 
 public extension Array {
+
+    func replacing(element newElement: Element, where comparison: (Element, Element) -> Bool) -> Array<Element> {
+        return self.map { comparison($0, newElement) ? newElement : $0 }
+    }
+    
     func deltas<T>(_ transform: ((Element, Element) -> T)) -> [T] {
         var result: [T] = []
         var prev: Element? = nil
