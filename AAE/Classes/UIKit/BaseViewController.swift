@@ -170,4 +170,68 @@ extension Reactive where Base: BaseViewController {
     }
 }
 
+public protocol Navigator: class {
+    func navigate(_ type: Navigation)
+}
+
+public protocol Navigating where N: Navigator {
+    
+    associatedtype N
+
+    var navigationManager: N? { get }
+}
+
+extension Navigating where Self: BaseViewController {
+
+    public func drive<T>(_ driver: DrivableState<T>, customLoadingComponent: UIViewController? = nil, goToOnNext navigation: Navigation, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
+        subscribe(
+            state: driver,
+            customLoadingComponent: customLoadingComponent,
+            onLoaded: { [weak navigationManager] _ in
+                navigationManager?.navigate(navigation)
+            },
+            onError: onError,
+            showDefaultErrorDialog: showDefaultErrorDialog
+        )
+    }
+
+    public func drive<T>(_ driver: DrivableState<T>, customLoadingComponent: UIViewController? = nil, goToOnNext screenType: BaseViewController.Type, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
+        drive(
+            driver,
+            customLoadingComponent: customLoadingComponent,
+            goToOnNext: .next(
+                screenType: screenType,
+                clearNavigationStack: false,
+                direction: .fromRight),
+            onError: onError,
+            showDefaultErrorDialog: showDefaultErrorDialog
+        )
+    }
+
+    public func drive(_ driver: ButtonDrivable, goToOnNext screenType: BaseViewController.Type, onError: ((Error) -> Void)? = nil) {
+        let state = driver.asDrivableState(startWith: .inactive)
+        drive(
+            state,
+            customLoadingComponent: nil,
+            goToOnNext: .next(
+                screenType: screenType,
+                clearNavigationStack: false,
+                direction: .fromLeft),
+            onError: onError,
+            showDefaultErrorDialog: true
+        )
+    }
+
+    public func drive(_ driver: ButtonDrivable, goToOnNext navigation: Navigation, onError: ((Error) -> Void)? = nil) {
+        let state = driver.asDrivableState(startWith: .inactive)
+        drive(
+            state,
+            customLoadingComponent: nil,
+            goToOnNext: navigation,
+            onError: onError,
+            showDefaultErrorDialog: true
+        )
+    }
+}
+
 #endif
