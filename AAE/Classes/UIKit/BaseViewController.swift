@@ -61,6 +61,13 @@ open class BaseViewController: UIViewController, Injectable, FailableInjectable 
         subscribe(state: viewState, onLoaded: nil)
     }
 
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         super.touchesBegan(touches, with: event)
+        if self is DismissingOnTouch {
+            view.endEditing(true)
+        }
+    }
+
     public func subscribe<T>(state: LoadingObservable<T>, customLoadingComponent: UIViewController? = nil, onLoaded: ((T) -> Void)?, onError: ((Error) -> Void)? = nil, showDefaultErrorDialog: Bool = true) {
         state.observeOnMain().subscribeOnNext { [weak self] state in
             switch state {
