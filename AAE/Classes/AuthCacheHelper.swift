@@ -2,6 +2,7 @@
 //
 
 import LoadableResult
+import SafeCollectionAccess
 
 struct AuthCacheHelper {
 

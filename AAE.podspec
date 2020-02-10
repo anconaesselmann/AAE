@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AAE'
-  s.version          = '0.3.5'
+  s.version          = '0.3.6'
   s.summary          = 'A collection of utility classes and extensions'
   s.swift_version    = '5.0'
 
@@ -31,6 +31,7 @@ These are extensions and classes that I use across projects.
   s.dependency 'RxOptional', '= 4.0.0'
   s.dependency 'SDWebImage', '= 5.0'
   s.dependency 'Alamofire', '= 5.0.0-rc.1'
+  s.dependency 'SafeCollectionAccess'
   s.ios.dependency 'constrain'
   s.ios.dependency 'Contain'
   s.ios.dependency 'LoadableResult'
