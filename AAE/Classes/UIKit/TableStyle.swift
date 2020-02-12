@@ -3,6 +3,7 @@
 
 import UIKit
 
+#if os(iOS)
 public protocol ReusableCellProtocol {
     static var cellReuseIdentifier: String { get }
 }
@@ -60,3 +61,4 @@ extension UITableView {
         }
     }
 }
+#endif

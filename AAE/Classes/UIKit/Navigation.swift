@@ -3,6 +3,7 @@
 
 import UIKit
 
+#if os(iOS)
 public enum Navigation {
 
     public enum Direction {
@@ -14,3 +15,4 @@ public enum Navigation {
     case next(screenType: BaseViewController.Type, clearNavigationStack: Bool, direction: Direction)
     case back
 }
+#endif

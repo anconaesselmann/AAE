@@ -3,9 +3,11 @@
 
 import UIKit
 
+#if os(iOS)
 extension UIImageView {
     public convenience init(contentMode: UIView.ContentMode) {
         self.init()
         self.contentMode = contentMode
     }
 }
+#endif

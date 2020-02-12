@@ -1,10 +1,6 @@
-#
-# Be sure to run `pod lib lint AAE.podspec' to ensure this is a
-# valid spec before submitting.
-
 Pod::Spec.new do |s|
   s.name             = 'AAE'
-  s.version          = '0.3.8'
+  s.version          = '0.4.0'
   s.summary          = 'A collection of utility classes and extensions'
   s.swift_version    = '5.0'
 
@@ -18,7 +14,7 @@ These are extensions and classes that I use across projects.
   s.source           = { :git => 'https://github.com/anconaesselmann/AAE.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
-  # s.watchos.deployment_target = '3.0'
+  s.watchos.deployment_target = '3.0'
 
   s.source_files = 'AAE/Classes/**/*'
 
@@ -27,12 +23,12 @@ These are extensions and classes that I use across projects.
   # }
 
   s.dependency 'RxSwift', '= 5.0.0'
-  s.dependency 'RxCocoa', '= 5.0.0'
+  s.ios.dependency 'RxCocoa', '= 5.0.0'
   s.dependency 'RxOptional', '= 4.0.0'
   s.dependency 'SDWebImage', '= 5.0'
   s.dependency 'Alamofire', '= 5.0.0-rc.1'
   s.dependency 'SafeCollectionAccess'
-  s.dependency 'constrain'
+  s.ios.dependency 'constrain'
   s.dependency 'Contain'
   s.dependency 'LoadableResult'
   s.dependency 'RxLoadableResult'

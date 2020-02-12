@@ -1,18 +1,15 @@
 //  Created by Axel Ancona Esselmann on 9/14/19.
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
-
+#if os(iOS)
 import UIKit
 import RxSwift
 import Contain
 import RxCocoa
 import LoadableResult
 import RxLoadableResult
-#if os(iOS)
 import constrain
-#endif
 
-#if os(iOS)
 open class BaseViewController: UIViewController, Injectable, FailableInjectable {
 
     public let bag = DisposeBag()

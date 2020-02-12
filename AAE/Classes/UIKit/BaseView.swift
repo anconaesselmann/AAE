@@ -3,6 +3,7 @@
 
 import UIKit
 
+#if os(iOS)
 open class BaseView: UIView {
     @available(*, unavailable)
     required public init?(coder: NSCoder) { fatalError() }
@@ -12,3 +13,4 @@ open class BaseView: UIView {
     }
 
 }
+#endif
