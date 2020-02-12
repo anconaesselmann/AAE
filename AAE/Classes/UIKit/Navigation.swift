@@ -3,7 +3,6 @@
 
 import UIKit
 
-#if os(iOS)
 public enum Navigation {
 
     public enum Direction {
@@ -12,7 +11,9 @@ public enum Navigation {
         case replace
     }
 
+    #if os(iOS)
     case next(screenType: BaseViewController.Type, clearNavigationStack: Bool, direction: Direction)
+    #endif
+    
     case back
 }
-#endif

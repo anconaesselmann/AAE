@@ -1,15 +1,30 @@
 //  Created by Axel Ancona Esselmann on 9/14/19.
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
-#if os(iOS)
+
 import UIKit
 import RxSwift
 import Contain
 import RxCocoa
 import LoadableResult
 import RxLoadableResult
+#if os(iOS)
 import constrain
+#endif
 
+
+public protocol Navigator: class {
+    func navigate(_ type: Navigation)
+}
+
+public protocol Navigating where N: Navigator {
+
+    associatedtype N
+
+    var navigationManager: N? { get }
+}
+
+#if os(iOS)
 open class BaseViewController: UIViewController, Injectable, FailableInjectable {
 
     public let bag = DisposeBag()
@@ -172,17 +187,6 @@ extension Reactive where Base: BaseViewController {
             vc.dismiss(animated: false, completion: nil)
         }
     }
-}
-
-public protocol Navigator: class {
-    func navigate(_ type: Navigation)
-}
-
-public protocol Navigating where N: Navigator {
-
-    associatedtype N
-
-    var navigationManager: N? { get }
 }
 
 extension Navigating where Self: BaseViewController {
