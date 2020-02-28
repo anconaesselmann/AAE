@@ -35,6 +35,10 @@ public class AuthManager {
         return status.map { $0.isLoggedIn }
     }
 
+    public var isLoggedInStatus: LoadingObservable<Bool> {
+        return loginStatus.mapLoadableResult { $0.isLoggedIn }
+    }
+
     public var auth: Observable<AuthData?> {
         return status.map { status in
             switch status {

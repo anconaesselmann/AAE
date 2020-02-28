@@ -4,16 +4,35 @@
 
 import Foundation
 
-public enum DebugGroup: String, DebugPrintable {
+public enum DebugGroup: String, PrefixedDebugPrintable {
     case debug
     case note
     case todo
     case warning
     case fatal
+
+    public var prefix: String {
+        switch self {
+        case .fatal:
+            return "‼️"
+        case .warning:
+            return "⚠️"
+        case .debug:
+            return "🐞"
+        case .note:
+            return "☝️"
+        case .todo:
+            return "🏗"
+        }
+    }
 }
 
 public protocol DebugPrintable {
     var rawValue: String { get }
+}
+
+public protocol PrefixedDebugPrintable: DebugPrintable {
+    var prefix: String { get }
 }
 
 public class Debug {
@@ -32,10 +51,11 @@ public class Debug {
         guard self.loggingGroups[group.rawValue] ?? false else {
             return
         }
-        if let string = string {
-            print(string)
+        let string = string ?? "nil"
+        if let prefixedGroup = group as? PrefixedDebugPrintable {
+            print(prefixedGroup.prefix + " " + string)
         } else {
-            print("nil")
+            print(string)
         }
         #endif
     }

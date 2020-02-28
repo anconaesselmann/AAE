@@ -7,6 +7,17 @@ import RxSwift
 
 public class Networking {
 
+    public enum DebugGroup: String, PrefixedDebugPrintable {
+        case networking
+
+        public var prefix: String {
+            switch self {
+            case .networking:
+                return "📶"
+            }
+        }
+    }
+
     public enum NetworkingError: Error {
         case notAuthorized
         case typeMismatch
@@ -57,6 +68,7 @@ public class Networking {
     }
 
     public func request(_ url: URL, method: HTTPMethod? = .post, headers: HTTPHeaders, parameters: [String : Any]? = nil) -> Single<Data?> {
+        Debug.log("Network Request: \(url.absoluteString)", group: DebugGroup.networking)
         return Single<Data?>.create(subscribe: { [weak self] subscriber -> Disposable in
             let disposeble = Disposables.create()
             guard let session = self?.session else {

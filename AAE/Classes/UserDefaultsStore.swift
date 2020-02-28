@@ -23,6 +23,25 @@ public extension Storing {
     }
 }
 
+
+// MARK: - Storing strings
+fileprivate struct StringStoringWrapper: Codable {
+    let stringValue: String
+}
+
+public extension Storing {
+
+    func set(_ stringValue: String, forKey key: StringRepresentable) {
+        let wrapped = StringStoringWrapper(stringValue: stringValue)
+        set(wrapped, forKey: key.stringValue)
+    }
+
+    func getString(forKey key: StringRepresentable) -> String? {
+        let wrapped = get(type: StringStoringWrapper.self, forKey: key)
+        return wrapped?.stringValue
+    }
+}
+
 public class UserDefaultsStore: BaseInjectable, Storing {
 
     public var decodingStategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase
