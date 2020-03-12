@@ -7,7 +7,8 @@ import RxLoadableResult
 
 public class AuthManager {
 
-    public enum AuthenticationStatus {
+    public enum AuthenticationStatus: Equatable {
+
         case loggedOut
         case loggedIn(AuthData)
 
@@ -15,6 +16,15 @@ public class AuthManager {
             switch self {
             case .loggedIn: return true
             case .loggedOut: return false
+            }
+        }
+
+        public static func == (lhs: AuthManager.AuthenticationStatus, rhs: AuthManager.AuthenticationStatus) -> Bool {
+            switch (lhs, rhs) {
+            case (.loggedIn, .loggedOut), (.loggedOut, .loggedIn): return false
+            case (.loggedOut, .loggedOut): return true
+            case (.loggedIn(let lhsLoggedIn), .loggedIn(let rhsLoggedIn)):
+                return lhsLoggedIn == rhsLoggedIn
             }
         }
     }
@@ -28,7 +38,7 @@ public class AuthManager {
 
     public var status: Observable<AuthenticationStatus> {
         return loginStatus
-        .unpack(whenNotLoaded: .loggedOut)
+            .unpack(whenNotLoaded: .loggedOut).distinctUntilChanged()
     }
 
     public var isLoggedIn: Observable<Bool> {
@@ -36,7 +46,9 @@ public class AuthManager {
     }
 
     public var isLoggedInStatus: LoadingObservable<Bool> {
-        return loginStatus.mapLoadableResult { $0.isLoggedIn }
+        return loginStatus
+            .mapLoaded { $0.isLoggedIn }
+            .distinctUntilChanged()
     }
 
     public var auth: Observable<AuthData?> {
@@ -55,6 +67,7 @@ public class AuthManager {
 
         self.loginStatus.asObservable()
             .unpack(whenNotLoaded: .loggedOut)
+            .distinctUntilChanged()
             .with(storage)
             .subscribeOnNext { AuthCacheHelper.cache(loginState: $0.0, storage: $0.1) }
             .disposed(by: bag)

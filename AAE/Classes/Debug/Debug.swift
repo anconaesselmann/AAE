@@ -46,6 +46,10 @@ public class Debug {
         #endif
     }
 
+    public static func isLogging(for group: DebugPrintable) -> Bool {
+        return self.loggingGroups[group.rawValue] ?? false
+    }
+
     public static func log(_ string: String?, group: DebugPrintable) {
         #if DEBUG
         guard self.loggingGroups[group.rawValue] ?? false else {
