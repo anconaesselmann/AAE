@@ -33,4 +33,5 @@ These are extensions and classes that I use across projects.
   s.dependency 'LoadableResult'
   s.dependency 'RxLoadableResult'
   s.dependency 'KeychainQueryBuilder'
+  s.dependency 'URN'
 end

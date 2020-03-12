@@ -4,6 +4,7 @@
 
 import Alamofire
 import RxSwift
+import URN
 
 public class Networking {
 

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct JWT {
+public struct JWT: Equatable {
     public let stringValue: String
 
     public init?(stringValue: String) {

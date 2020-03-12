@@ -2,6 +2,8 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
+import URN
+
 public struct DeepLink<Root> where Root: StringRepresentable {
     public let root: Root
     public let queryDict: [String: Any]

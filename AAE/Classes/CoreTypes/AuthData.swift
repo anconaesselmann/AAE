@@ -2,9 +2,9 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-import Foundation
+import URN
 
-public struct AuthData {
+public struct AuthData: Equatable {
 
     enum CodingKeys: String, CodingKey {
         case urn
@@ -17,6 +17,10 @@ public struct AuthData {
     public init(urn: URN, jwt: JWT) {
         self.urn = urn
         self.jwt = jwt
+    }
+
+    public static func == (lhs: AuthData, rhs: AuthData) -> Bool {
+        return lhs.jwt == rhs.jwt && lhs.urn == rhs.urn
     }
 }
 

@@ -2,7 +2,7 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 
-import Foundation
+import URN
 
 public extension URL {
     func appendingQueryItem(name: String, value: String) -> URL {

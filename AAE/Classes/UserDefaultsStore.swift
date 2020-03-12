@@ -2,6 +2,7 @@
 //  Copyright © 2019 Axel Ancona Esselmann. All rights reserved.
 //
 import Contain
+import URN
 
 public protocol Storing: class {
     func set<T>(_ storable: T, forKey key: String) where T: Codable
